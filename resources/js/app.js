@@ -1,7 +1,11 @@
-import './bootstrap';
+require('./bootstrap');
 
-import Alpine from 'alpinejs';
+import { createApp } from 'vue'
+import ExampleComponent from "./components/ExampleComponent.vue";
 
-window.Alpine = Alpine;
+const app = createApp({});
 
-Alpine.start();
+app.component("ExampleComponent", ExampleComponent);
+
+app.mount("#app");
+

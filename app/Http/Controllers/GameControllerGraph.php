@@ -7,10 +7,11 @@ use MarcReichel\IGDBLaravel\Models\Game;
 use Illuminate\Http\Request;
 use App\Models\Helpers\Graph;
 use MarcReichel\IGDBLaravel\Models\Genre;
+use Illuminate\Support\Facades\View;
 
 class GameControllerGraph extends Controller{
 
-    public function index(){
+    public function graph(){
 
     // Użycie grafu
     $graph = new Graph();
@@ -117,9 +118,9 @@ class GameControllerGraph extends Controller{
     $graph->addEdge('Card and Board Game', 'Puzzle', 8);
     $graph->addEdge('Card and Board Game', 'RPG', 6);
 
-    $vertices = ['Fighting', 'Racing'];
+    $vertices = ['Racing'];
 
-    $vertex = $graph->traverseGraph($vertices, 3);
+    $vertex = $graph->traverseGraph($vertices, 2);
         //dd($vertex);
     $genre_id = array(Genre::where('name', $vertex)->first()->id);
 
@@ -147,6 +148,6 @@ class GameControllerGraph extends Controller{
 
             }
 
-            return view('Games.graph', compact('games'));
+            return View::make('recommend')->with('recom', $games);
     }
 }

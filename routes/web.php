@@ -10,7 +10,6 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\RecommendController;
 use App\Http\Controllers\GameControllerGraph;
 
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -46,14 +45,12 @@ Route::get('/games',[SearchController::class,'index']);
 
 Route::post('/library/add/{game_id}/{user_id}', [LibraryController::class, 'addGame'])->name('library.addGame');
 Route::post('/recommend/storeweight', [RecommendController::class, 'storeWeight'])->name('recommend.storeweight');
+Route::post('/recommend/graph', [GameControllerGraph::class, 'graph'])->name('recommend.storegraph');
 
 Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -63,4 +60,10 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('profile.show');
 
-require __DIR__.'/auth.php';
+Route::view('home', 'home')
+	->name('home')
+	->middleware(['auth']);
+
+Route::view('profile', 'profile.edit')
+	->name('profile.edit')
+	->middleware(['auth']);
