@@ -107,46 +107,7 @@ class RecommendController extends Controller
         if( $game->game_modes != null)
         {
 
-        $mygame = new MyGame;
-        $mygame->name = $game->name;
-
-        if( $game->aggregated_rating == null){
-            $mygame->crating = "no data available";
-            $mygame->cratingc = "no data available";
-
-        }else{
-            $mygame->crating = $game->aggregated_rating;
-            $mygame->cratingc = $game->aggregated_rating_count;
-        }
-
-        if( $game->rating == null){
-            $mygame->rating = "no data available";
-            $mygame->ratingc = "no data available";
-
-        }else{
-            $mygame->rating = $game->rating;
-            $mygame->ratingc = $game->rating_count;
-        }
-        unset($arr1);
-        $arr1[] = $game->game_modes;
-        $mygame->game_modes = implode(" ", $arr1[0]);
-
-        unset($arr2);
-        $arr2[] = $game->genres;
-        $mygame->genres = implode(" ", $arr2[0]);
-
-        unset($arr3);
-        $arr3[] = $game -> platforms;
-        $mygame->platforms = implode(" ", $arr3[0]);
-
-        $mygame->release_date = $game -> first_release_date;
-        if($game->cover != null){
-        $mygame->cover = $game -> cover;
-        }else{
-            $mygame->cover = "no cover available";
-        }
-
-        $mygame = MyGame::updateOrInsert([
+        MyGame::updateOrInsert([
             'id' => $game->id,
         ], [
             'name' => $game->name,
@@ -159,6 +120,7 @@ class RecommendController extends Controller
             'platforms' => implode(" ", $game->platforms ?? []),
             'release_date' => $game->first_release_date,
             'cover' => $game->cover ?? "no cover available",
+            'description' => $game->summary ?? 'no description available',
         ]);
 
         }
@@ -234,51 +196,7 @@ public function storeWeight(Request $request){
 
 foreach( $games as $game ){
 
-    // error_log(count($game->game_modes));
-    if( $game->game_modes != null)
-    {
-
-    $mygame = new MyGame;
-    $mygame->name = $game->name;
-
-    if( $game->aggregated_rating == null){
-        $mygame->crating = "no data available";
-        $mygame->cratingc = "no data available";
-
-    }else{
-        $mygame->crating = $game->aggregated_rating;
-        $mygame->cratingc = $game->aggregated_rating_count;
-    }
-
-    if( $game->rating == null){
-        $mygame->rating = "no data available";
-        $mygame->ratingc = "no data available";
-
-    }else{
-        $mygame->rating = $game->rating;
-        $mygame->ratingc = $game->rating_count;
-    }
-    unset($arr1);
-    $arr1[] = $game->game_modes;
-    $mygame->game_modes = implode(" ", $arr1[0]);
-
-    unset($arr2);
-    $arr2[] = $game->genres;
-    $mygame->genres = implode(" ", $arr2[0]);
-
-    unset($arr3);
-    $arr3[] = $game -> platforms;
-    $mygame->platforms = implode(" ", $arr3[0]);
-
-    $mygame->release_date = $game -> first_release_date;
-
-    if($game->cover != null){
-    $mygame->cover = $game -> cover;
-    }else{
-        $mygame->cover = "no cover available";
-    }
-
-    $mygame = MyGame::updateOrInsert([
+    MyGame::updateOrInsert([
         'id' => $game->id,
     ], [
         'name' => $game->name,
@@ -291,12 +209,10 @@ foreach( $games as $game ){
         'platforms' => implode(" ", $game->platforms ?? []),
         'release_date' => $game->first_release_date,
         'cover' => $game->cover ?? "no cover available",
+        'description' => $game->summary ?? 'no description available',
     ]);
 
-    }
 }
-
-
 
     $mygames = MyGame::all();
 

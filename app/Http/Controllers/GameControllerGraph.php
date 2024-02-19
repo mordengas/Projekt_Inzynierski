@@ -118,9 +118,9 @@ class GameControllerGraph extends Controller{
     $graph->addEdge('Card and Board Game', 'Puzzle', 8);
     $graph->addEdge('Card and Board Game', 'RPG', 6);
 
-    $vertices = ['Racing'];
+    $vertices = ['Fighting', 'RTS'];
 
-    $vertex = $graph->traverseGraph($vertices, 2);
+    $vertex = $graph->traverseGraph($vertices, 3);
         //dd($vertex);
     $genre_id = array(Genre::where('name', $vertex)->first()->id);
 
@@ -129,7 +129,7 @@ class GameControllerGraph extends Controller{
 
         foreach( $games as $game ){
 
-                $mygame = MyGame::updateOrInsert([
+                MyGame::updateOrInsert([
                     'id' => $game->id,
                 ], [
                     'name' => $game->name,
@@ -144,10 +144,13 @@ class GameControllerGraph extends Controller{
                     'cover' => $game->cover ?? "no cover available",
                 ]);
 
-                // $games = MyGame::whereIn('id', $games)->get()->all();
+
 
             }
 
-            return View::make('recommend')->with('recom', $games);
+        $mygames = MyGame::whereIn('id', $games->pluck('id'))->get()->all();
+
+        return View::make('recommend')->with('games', $mygames);
+
     }
 }

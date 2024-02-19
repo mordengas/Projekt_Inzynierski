@@ -13,14 +13,12 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <h2 class="my-3">{{ __('Profile') }}</h2>
+                @include('profile.details')
                 @if (Laravel\Fortify\Features::enabled(Laravel\Fortify\Features::updateProfileInformation()))
                     @include('profile.update-profile-information-form')
                 @endif
                 @if (Laravel\Fortify\Features::enabled(Laravel\Fortify\Features::updatePasswords()))
                     @include('profile.update-password-form')
-                @endif
-                @if (Laravel\Fortify\Features::enabled(Laravel\Fortify\Features::twoFactorAuthentication()))
-                    @include('profile.two-factor-authentication-form')
                 @endif
             </div>
         </div>

@@ -1,32 +1,5 @@
-{{-- <!DOCTYPE html>
-<html lang="pl">
 
-<head>
-
-    <meta charset="utf-8">
-    <title>Miary Symboliczne</title>
-
-    <meta name="description" content="Opis zawartości strony dla wyszukiwarek">
-    <meta name="keywords" content="słowa, kluczowe, opisujące, zawartość">
-    <meta name="author" content="Jan Programista">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" rel="stylesheet"/>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" rel="sylesheet"></script>
-
-    <style>
-        .checkbox-group label {
-          display: inline-block;
-          margin-right: 10px;
-        }
-      </style>
-
-</head>
-<body> --}}
-    <form action="{{route('recommend.store')}}" method="POST" enctype="multipart/form-data">
+    <form action="{{route('recommend.store')}}" method="POST" enctype="multipart/form-data" id="algo">
         {{ csrf_field() }}
 
         <div class="checkbox-group">
@@ -109,44 +82,12 @@
             <option value=48>PS 4</option>
 
         </select>
-    <br>
+        <br>
 
-    <label for="rok_wydania">Wybierz najwczesniejszy rok wydania:</label>
+        <label for="rok_wydania">Wybierz najwczesniejszy rok wydania:</label>
 
-    <input type="number" placeholder="YYYY" min="1995" max="2023" id = "rok_wydania" name="rok_wydania">
+        <input type="number" placeholder="YYYY" min="1995" max="2023" id = "rok_wydania" name="rok_wydania">
 
-    <br>
-    <button class="btn btn-primary btn-lg" type="submit">Prześlij</button>
+        <br>
+        <button class="btn btn-primary btn-lg" type="submit" form="algo" >Prześlij</button>
     </form>
-
-    @if ($request = Session::get('recom'))
-    <h1>Polecane gry dla Ciebie</h1>
-    <div class="alert alert-success">
-        <p>1.{{ $request[0]['name'] }}</p>
-        {{-- <p>  {{ $request1->game_modes }}</p>
-        <p>  {{ $request1->genres }}</p> --}}
-        <img src="{{$cover = MarcReichel\IGDBLaravel\Models\Cover::find((int)$request[0]['cover'])->url}}"  width="100" height="180">
-
-    </div>
-
-    <div class="alert alert-success">
-        <p>2.{{ $request[1]['name'] }}</p>
-        {{-- <p>  {{ $request2->game_modes }}</p>
-        <p>  {{ $request2->genres }}</p> --}}
-        <img src="{{$cover = MarcReichel\IGDBLaravel\Models\Cover::find((int)$request[1]['cover'])->url}}"  width="100" height="180">
-
-    </div>
-
-    <div class="alert alert-success">
-        <p>3.{{ $request[2]['name'] }}</p>
-        {{-- <p>  {{ $request3->game_modes }}</p>
-        <p>  {{ $request3->genres }}</p> --}}
-        <img src="{{$cover = MarcReichel\IGDBLaravel\Models\Cover::find((int)$request[2]['cover'])->url}}"  width="100" height="180">
-
-    </div>
-
-@endif
-
-{{-- </body>
-
-</html> --}}

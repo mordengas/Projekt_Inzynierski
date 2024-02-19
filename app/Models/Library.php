@@ -8,6 +8,9 @@ class Library extends Model
     protected $fillable = [
         'user_id',
         'game_id',
+        'state',
+        'score'
+
     ];
 
 
@@ -18,4 +21,18 @@ class Library extends Model
                     ->exists();
     }
 
+    public static function getGameState($userId, $gameId)
+    {
+        return self::where('user_id', $userId)
+                    ->where('game_id', $gameId)
+                    ->value('state');
+    }
+
+    public static function getScore($userId, $gameId)
+    {
+        return self::where('user_id', $userId)
+                    ->where('game_id', $gameId)
+                    ->value('score');
+
+    }
 }

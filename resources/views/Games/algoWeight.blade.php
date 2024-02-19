@@ -1,4 +1,4 @@
-    <form action="{{route('recommend.storeweight')}}" method="POST" enctype="multipart/form-data">
+    <form action="{{route('recommend.storeweight')}}" method="POST" enctype="multipart/form-data" id="weight">
         {{ csrf_field() }}
         <div class="form-group">
             <label for="single_player">Single Player:</label>
@@ -103,5 +103,5 @@
             <input type="number" placeholder="YYYY" min="1995" max="2023" id="rok_wydania" name="rok_wydania">
         </div>
 
-        <button class="btn btn-primary btn-lg" type="submit">Prześlij</button>
+        <button class="btn btn-primary btn-lg" type="submit" form="weight">Prześlij</button>
     </form>

@@ -21,6 +21,10 @@ use App\Http\Controllers\GameControllerGraph;
 |
 */
 
+Route::get('/', function () {
+    return view('home');
+});
+
 Route::get('/graph', [GameControllerGraph::class, 'index']);
 
 Route::resource('comments', CommentController::class);
@@ -43,22 +47,17 @@ Route::get('/game/{id}',[GameController::class,'show']);
 
 Route::get('/games',[SearchController::class,'index']);
 
-Route::post('/library/add/{game_id}/{user_id}', [LibraryController::class, 'addGame'])->name('library.addGame');
+Route::post('/library/state', [LibraryController::class, 'setState'])->name('library.setState');
+Route::post('/library/add', [LibraryController::class, 'addGame'])->name('library.addGame');
+Route::post('/library/score', [LibraryController::class, 'setOrUpdateScore'])->name('library.setScore');
+
+Route::post('/recommend/store', [RecommendController::class, 'store'])->name('recommend.storeweight');
 Route::post('/recommend/storeweight', [RecommendController::class, 'storeWeight'])->name('recommend.storeweight');
 Route::post('/recommend/graph', [GameControllerGraph::class, 'graph'])->name('recommend.storegraph');
 
-Route::get('/', function () {
-    return view('home');
-});
-
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-
-Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('profile.show');
+Route::get('/profile/show/{id}', [ProfileController::class, 'show'])->name('profile.show');
+Route::post('/profile/setbio', [ProfileController::class, 'setBio'])->name('profile.setBio');
+Route::post('/profile/setavatar', [ProfileController::class, 'upload'])->name('profile.upload');
 
 Route::view('home', 'home')
 	->name('home')

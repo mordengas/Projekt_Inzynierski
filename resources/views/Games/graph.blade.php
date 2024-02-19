@@ -1,6 +1,7 @@
 <div class="container">
 
-    <form action="{{route('recommend.storegraph')}}" method="POST" enctype="multipart/form-data">
+
+    <form action="{{route('recommend.storegraph')}}" method="POST" enctype="multipart/form-data" id="graph">
         {{ csrf_field() }}
         <div class="form-group">
             <label for="genre">Genre:</label>
@@ -26,6 +27,6 @@
             <label for="range">Range:</label>
             <input type="range" class="form-control-range" id="range" name="range" min="1" max="3">
         </div>
-        <button class="btn btn-primary btn-lg" type="submit">Prześlij</button>
+        <button class="btn btn-primary btn-lg" type="submit" form="graph">Prześlij</button>
     </form>
 </div>

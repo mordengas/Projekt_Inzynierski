@@ -31,6 +31,10 @@
         </div>
     </div>
 
+    @if (isset($games))
+        @include('shared.gamebox', ['view' => 'recommend'])
+    @endif
+
     @if (isset($recom))
     <h1>Polecane gry dla Ciebie</h1>
     <div class="alert alert-success">

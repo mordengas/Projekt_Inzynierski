@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Scout\Searchable;
+use MarcReichel\IGDBLaravel\Models\GameMode;
+use MarcReichel\IGDBLaravel\Models\Genre;
+use MarcReichel\IGDBLaravel\Models\Platform;
 
 class MyGame extends Model
 {
@@ -22,7 +24,8 @@ class MyGame extends Model
         'genres',
         'platforms',
         'release_date',
-        'cover'
+        'cover',
+        'description',
     ];
 
     /**
@@ -47,8 +50,44 @@ class MyGame extends Model
 
     public function toSearchableArray()
     {
-
-        return ['name' => $this->name
+        return [
+            'name' => $this->name,
         ];
+    }
+
+
+    public static function gameModesToString($gameModes)
+    {
+        $gameModes = explode(' ', $gameModes);
+        $textVersions = [];
+
+        foreach ($gameModes as $mode) {
+            $textVersions[] = GameMode::find((int)$mode)->name;
+        }
+
+        return implode(', ', $textVersions);
+    }
+    public static function platformsToString($platforms)
+    {
+        $platforms = explode(' ', $platforms);
+        $textVersions = [];
+
+        foreach ($platforms as $platform) {
+            $textVersions[] = Platform::find((int)$platform)->name;
+        }
+
+        return implode(', ', $textVersions);
+    }
+
+    public static function genresToString($genres)
+    {
+        $genres = explode(' ', $genres);
+        $textVersions = [];
+
+        foreach ($genres as $genre) {
+            $textVersions[] = Genre::find((int)$genre)->name;
+        }
+
+        return implode(', ', $textVersions);
     }
 }

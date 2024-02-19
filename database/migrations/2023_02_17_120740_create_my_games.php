@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('platforms');
             $table->timestamp('release_date');
             $table->string('cover');
+            $table->longText('description');
             $table->timestamps();
         });
     }

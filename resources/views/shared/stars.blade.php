@@ -1,8 +1,3 @@
-{{-- <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="app/resources/css/star.css">
-  </head> --}}
-
 <div class="rate">
     <input type="radio" id="star5" name="rate" value="5" />
     <label for="star5" title="text">5 stars</label>

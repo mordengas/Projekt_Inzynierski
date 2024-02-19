@@ -11,7 +11,6 @@ use Illuminate\View\View;
 use App\Models\Library;
 use App\Models\User;
 use App\Models\MyGame;
-use Laravel\Prompts\Output\ConsoleOutput;
 
 class ProfileController extends Controller
 {
@@ -39,6 +38,30 @@ class ProfileController extends Controller
         $request->user()->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
+    }
+
+    public function setBio(Request $request): RedirectResponse
+    {
+        $request->user()->description = $request->bio;
+        $request->user()->save();
+
+        return Redirect::route('profile.edit')->with('status', 'bio-updated');
+    }
+
+    public function upload(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $imageName = time() . '.' . $request->image->extension();
+
+        $request->image->move(public_path('images'), $imageName);
+
+        $request->user()->image = $imageName;
+        $request->user()->save();
+
+        return Redirect::route('profile.edit')->with('status', 'image-updated');
     }
 
     /**
