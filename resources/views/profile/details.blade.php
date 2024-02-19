@@ -15,7 +15,7 @@
                 </div>
                 <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
                   <div class="text-center text-sm-left mb-2 mb-sm-0">
-                    <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">John Smith</h4>
+                    <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">{{Auth::user()->name}}</h4>
                     <div class="mt-2">
                         <form action="{{route('profile.upload')}}" method="POST" enctype="multipart/form-data" id="avatar">
                             @csrf
@@ -27,7 +27,7 @@
                     </div>
                   </div>
                   <div class="text-center text-sm-right">
-                    <span class="badge badge-primary">{{Auth::user()->role}}</span>
+                    <span class="badge text-bg-dark">{{Auth::user()->role}}</span>
                     <div class="text-muted"><small>Joined {{Auth::user()->created_at}}</small></div>
                   </div>
                 </div>

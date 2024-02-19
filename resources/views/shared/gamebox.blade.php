@@ -49,7 +49,7 @@
 
 @elseif($view === "profile")
 @foreach($games as $game)
-<div class="card mb-3" style="max-width: 540px;">
+<div class="card mb-3" style="max-width: 540px; max-height: 250px;">
     <div class="row g-0">
       <div class="col-md-4">
         @if($game->cover === "no cover available")
@@ -61,7 +61,6 @@
       <div class="col-md-8">
         <div class="card-body">
           <h5 class="card-title" >{{ $game->name }}</h5>
-          <p class="card-text">{{$game->description}}</p>
             <div class="d-flex justify-content-end">
                 <a href="{{ url('/game', $game->id) }}" class="btn btn-primary btn-sm stretched-link" >Check Game Page</a>
             </div>

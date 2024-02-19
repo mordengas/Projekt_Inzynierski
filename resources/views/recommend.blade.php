@@ -7,26 +7,24 @@
 
     <ul class="nav nav-tabs justify-content-center" id="myTabs" role="tablist">
         <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#content1" type="button" role="tab" aria-controls="content1" aria-selected="true">Tab 1</button>
+            <button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#content1" type="button" role="tab" aria-controls="content1" aria-selected="true">By Game Mode</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="tab2" data-bs-toggle="tab" data-bs-target="#content2" type="button" role="tab" aria-controls="content2" aria-selected="false">Tab 2</button>
+            <button class="nav-link" id="tab2" data-bs-toggle="tab" data-bs-target="#content2" type="button" role="tab" aria-controls="content2" aria-selected="false">By Genre</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="tab3" data-bs-toggle="tab" data-bs-target="#content3" type="button" role="tab" aria-controls="content3" aria-selected="false">Tab 3</button>
+            <button class="nav-link" id="tab3" data-bs-toggle="tab" data-bs-target="#content3" type="button" role="tab" aria-controls="content3" aria-selected="false">Graph Search</button>
         </li>
     </ul>
+    <br>
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="content1" role="tabpanel" aria-labelledby="tab1">
-            <h3>Content for Tab 1</h3>
             @include('Games.algoWeight')
         </div>
         <div class="tab-pane fade" id="content2" role="tabpanel" aria-labelledby="tab2">
-            <h3>Content for Tab 2</h3>
             @include('Games.algo')
         </div>
         <div class="tab-pane fade" id="content3" role="tabpanel" aria-labelledby="tab3">
-            <h3>Content for Tab 3</h3>
             @include('Games.graph')
         </div>
     </div>

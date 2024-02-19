@@ -28,6 +28,9 @@
             </div>
         </div>
         <div class="col-md-3">
+            @guest
+
+            @else
             <div class="d-flex flex-row-reverse">
 
             <div class="dropdown">
@@ -58,27 +61,26 @@
                 </form>
             @endif
             @endif
-            </div>
 
-                    <form action="{{ route('library.setScore') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="game_id" value="{{ $game->id }}">
-                        @if(auth()->check())
-                        <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
-                        @endif
-                    <div class="rate">
-                        <input type="radio" id="star5" name="score" value="5" {{ App\Models\Library::getScore(auth()->user()->id, $game->id) == 5 ? 'checked' : '' }} />
-                        <label for="star5" title="text">5 stars</label>
-                        <input type="radio" id="star4" name="score" value="4" {{ App\Models\Library::getScore(auth()->user()->id, $game->id) == 4 ? 'checked' : '' }} />
-                        <label for="star4" title="text">4 stars</label>
-                        <input type="radio" id="star3" name="score" value="3" {{ App\Models\Library::getScore(auth()->user()->id, $game->id) == 3 ? 'checked' : '' }} />
-                        <label for="star3" title="text">3 stars</label>
-                        <input type="radio" id="star2" name="score" value="2" {{ App\Models\Library::getScore(auth()->user()->id, $game->id) == 2 ? 'checked' : '' }} />
-                        <label for="star2" title="text">2 stars</label>
-                        <input type="radio" id="star1" name="score" value="1" {{ App\Models\Library::getScore(auth()->user()->id, $game->id) == 1 ? 'checked' : '' }} />
-                        <label for="star1" title="text">1 star</label>
-                    </div>
-                    </form>
+                <form action="{{ route('library.setScore') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="game_id" value="{{ $game->id }}">
+                    @if(auth()->check())
+                    <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                    @endif
+                <div class="rate">
+                    <input type="radio" id="star5" name="score" value="5" {{ App\Models\Library::getScore(auth()->user()->id, $game->id) == 5 ? 'checked' : '' }} />
+                    <label for="star5" title="text">5 stars</label>
+                    <input type="radio" id="star4" name="score" value="4" {{ App\Models\Library::getScore(auth()->user()->id, $game->id) == 4 ? 'checked' : '' }} />
+                    <label for="star4" title="text">4 stars</label>
+                    <input type="radio" id="star3" name="score" value="3" {{ App\Models\Library::getScore(auth()->user()->id, $game->id) == 3 ? 'checked' : '' }} />
+                    <label for="star3" title="text">3 stars</label>
+                    <input type="radio" id="star2" name="score" value="2" {{ App\Models\Library::getScore(auth()->user()->id, $game->id) == 2 ? 'checked' : '' }} />
+                    <label for="star2" title="text">2 stars</label>
+                    <input type="radio" id="star1" name="score" value="1" {{ App\Models\Library::getScore(auth()->user()->id, $game->id) == 1 ? 'checked' : '' }} />
+                    <label for="star1" title="text">1 star</label>
+                </div>
+                </form>
 
                 <script>
                     document.querySelectorAll('input[type="radio"]').forEach((input) => {
@@ -87,32 +89,32 @@
                         });
                     });
                 </script>
+                @endguest
+            </div>
         </div>
-    </div>
-
-    <h3>Add Comment</h3>
-    <form action="{{ route('comments.store') }}" method="POST">
-        @csrf
-        <input type="hidden" name="game_id" value="{{(int)$game->id}}">
-        @if(auth()->check())
-        <input type="hidden" name="user_id" value="{{auth()->user()->id }}">
-        @endif
-        <div class="form-group">
-            <label for="comment">Comment:</label>
-            <textarea class="form-control" id="content" name="content" required></textarea>
-        </div>
-        <br>
-        <div class="d-flex justify-content-end">
+        <h3>Add Comment</h3>
+        <form action="{{ route('comments.store') }}" method="POST">
+            @csrf
+            <input type="hidden" name="game_id" value="{{(int)$game->id}}">
             @if(auth()->check())
-            <button type="submit" class="btn btn-primary">Add Comment</button>
-            @else
-            <button type="submit" class="btn btn-primary" disabled>Add Comment</button>
+            <input type="hidden" name="user_id" value="{{auth()->user()->id }}">
             @endif
-        </div>
-    </form>
+            <div class="form-group">
+                <label for="comment">Comment:</label>
+                <textarea class="form-control" id="content" name="content" required></textarea>
+            </div>
+            <br>
+            <div class="d-flex justify-content-end">
+                @if(auth()->check())
+                <button type="submit" class="btn btn-primary">Add Comment</button>
+                @else
+                <button type="submit" class="btn btn-primary" disabled>Add Comment</button>
+                @endif
+            </div>
+        </form>
 
-    <h2>Comments</h2>
-    @include('shared.commentbox')
-
+        <h2>Comments</h2>
+        @include('shared.commentbox')
+    </div>
 </div>
 @endsection

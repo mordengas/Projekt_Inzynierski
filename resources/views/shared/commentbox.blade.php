@@ -2,11 +2,11 @@
     <div class="card bg-light" style="margin-bottom: 10px;">
         <div class="card-body">
             <h5 class="card-title">
-                @if(Auth::user()->image)
-                <img class="image rounded-circle" src="/images/{{Auth::user()->image}}" alt="profile_image" style="width: 40px;height: 40px; padding: 0px; margin: 0px; ">
+                @if($comment->user->image)
+                <img class="image rounded-circle" src="/images/{{$comment->user->image}}" alt="profile_image" style="width: 40px;height: 40px; padding: 0px; margin: 0px; ">
                 @endif
                 <a href="{{ url('/profile', $comment->user_id) }}">
-                    {{ App\Models\User::find($comment->user_id)->name }}
+                    {{ $comment->user->name }}
                 </a>
             </h5>
             <p class="card-text">
