@@ -9,9 +9,9 @@ use Illuminate\Contracts\View\View;
 
 class UserController extends Controller
 {
-    public function show(Request $request): View
+    public function show(Request $request)
     {
-        $user = User::find($request->userId);
+        $user = User::find($request->id);
 
         if (!$user) {
             return response()->json(['message' => 'User not found'], 404);

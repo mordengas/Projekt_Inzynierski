@@ -25,8 +25,6 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/graph', [GameControllerGraph::class, 'index']);
-
 Route::resource('comments', CommentController::class);
 
 Route::resource('search', SearchController::class);
@@ -39,7 +37,7 @@ Route::resource('recommend', RecommendController::class);
 
 // Route::get('/recommend', [RecommendController::class, 'index']);
 
-Route::get('/user/{id}',[UserController::class,'show']);
+
 
 Route::get('/game',[CommentController::class,'index']);
 
@@ -55,7 +53,7 @@ Route::post('/recommend/store', [RecommendController::class, 'store'])->name('re
 Route::post('/recommend/storeweight', [RecommendController::class, 'storeWeight'])->name('recommend.storeweight');
 Route::post('/recommend/graph', [GameControllerGraph::class, 'graph'])->name('recommend.storegraph');
 
-Route::get('/profile/show/{id}', [ProfileController::class, 'show'])->name('profile.show');
+Route::get('/user/{id}',[UserController::class,'show'])->name('profile.show');
 Route::post('/profile/setbio', [ProfileController::class, 'setBio'])->name('profile.setBio');
 Route::post('/profile/setavatar', [ProfileController::class, 'upload'])->name('profile.upload');
 

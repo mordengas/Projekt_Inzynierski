@@ -98,7 +98,7 @@ class RecommendController extends Controller
         $games = Game::whereNotNull('platforms')->whereNotNull('genres')
          ->whereIn('game_modes', [4,5,6])->whereIn('platforms', $platforma)
          ->whereYear('first_release_date','>=', $rok)
-         ->limit(100)->get();
+         ->limit(300)->get();
 
 
     foreach( $games as $game ){

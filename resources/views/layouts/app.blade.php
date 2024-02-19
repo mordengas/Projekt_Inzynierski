@@ -26,7 +26,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <style>
         .navbar {
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         .rate {
@@ -63,6 +63,14 @@
         .rate > input:checked ~ label:hover ~ label,
         .rate > label:hover ~ input:checked ~ label {
             color: #c59b08;
+        }
+        .rate.disabled {
+            pointer-events: none; /* Disables clicking */
+        }
+
+        .rate.disabled label {
+            cursor: default; /* Disables hover cursor */
+            pointer-events: none; /* Disables clicking */
         }
     </style>
 
@@ -149,6 +157,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="/recommend">Recommend</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/recommend">Search</a>
+                            </li>
                         </ul>
                     </ul>
 
@@ -175,11 +186,13 @@
                                     <a href="{{ route('profile.edit') }}" class="dropdown-item">
                                         {{ __('Profile') }}
                                     </a>
+                                    <a class="dropdown-item" href="{{ route('profile.show', Auth::user()->id) }}">
+                                        {{ __('Library') }}
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
-
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
@@ -190,7 +203,7 @@
                 </div>
                 @guest
                 @else
-                    @if(Auth::user()->image)
+                    @if(Auth::user()->image !== 'user.png')
                         <img class="image rounded-circle" src="/images/{{Auth::user()->image}}" alt="profile_image" style="width: 40px;height: 40px; padding: 0px; margin: 0px; ">
                     @endif
                 @endguest
@@ -207,11 +220,9 @@
             <p class="col-md-4 mb-0 text-body-secondary">&copy; 2023 {{ config('app.name', 'Laravel') }}</p>
 
             <ul class="nav col-md-4 justify-content-end">
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Features</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Pricing</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">FAQs</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
+                <li class="nav-item"><a href="/home" class="nav-link px-2 text-body-secondary">Home</a></li>
+                <li class="nav-item"><a href="/recommend" class="nav-link px-2 text-body-secondary">Recommend</a></li>
+                <li class="nav-item"><a href="/search" class="nav-link px-2 text-body-secondary">Search</a></li>
             </ul>
             </footer>
         </div>

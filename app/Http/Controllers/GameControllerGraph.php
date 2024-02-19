@@ -80,7 +80,7 @@ class GameControllerGraph extends Controller{
 
         $mygames = MyGame::whereIn('id', $games->pluck('id'))->get()->all();
 
-        return View::make('recommend')->with('games', $mygames);
+        return view('recommend')->with('games', $mygames);
 
     }
 }

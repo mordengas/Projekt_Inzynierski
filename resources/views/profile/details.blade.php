@@ -4,7 +4,7 @@
               <div class="row">
                 <div class="col-12 col-sm-auto mb-3">
                   <div class="mx-auto" style="width: 140px;">
-                    @if(Auth::user()->image)
+                    @if(Auth::user()->image !== 'user.png')
                     <img class="d-flex justify-content-center align-items-center rounded" src="/images/{{Auth::user()->image}}" alt="profile_image" style="height: 140px; background-color: rgb(233, 236, 239);">
                     @else
                     <div class="d-flex justify-content-center align-items-center rounded" style="height: 140px; background-color: rgb(233, 236, 239);">
@@ -41,8 +41,10 @@
                           <div class="col mb-3">
                             <div class="form-group">
                               <label>About</label>
-                              @if (Auth::user()->description)
+                              @if (Auth::user()->description !== null)
                               <textarea class="form-control" rows="5" id="bio" name="bio" placeholder="My Bio">{{Auth::user()->description}}</textarea>
+                              @else
+                              <textarea class="form-control" rows="5" id="bio" name="bio" placeholder="My Bio"></textarea>
                               @endif
                             </div>
                           </div>

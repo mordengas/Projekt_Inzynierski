@@ -85,18 +85,4 @@ class ProfileController extends Controller
         return Redirect::to('/');
     }
 
-    /**
-     * Show the user and their library.
-     */
-    public function show(Request $request): View
-    {
-        $user = User::find($request->id);
-        $library = Library::where('user_id', $user->id)->pluck('game_id')->toArray();
-        $games = MyGame::whereIn('id', $library)->get()->all();
-
-        return view('profile.profile', [
-            'user' => $user,
-            'games' => $games,
-        ]);
-    }
 }

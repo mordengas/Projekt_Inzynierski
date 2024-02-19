@@ -35,4 +35,9 @@ class Library extends Model
                     ->value('score');
 
     }
+    public static function countUserGames($userId)
+    {
+        return self::where('user_id', $userId)->count();
+
+    }
 }
