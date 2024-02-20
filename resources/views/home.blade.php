@@ -1,73 +1,81 @@
 @extends('layouts.app')
 
 @section('content')
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-3">
-            <h3 class="text-primary">Top 5 gier</h3>
-            <ul class="list-group">
-                <li class="list-group-item bg-secondary">
-                    <div class="d-flex justify-content-between">
-                        <div class="text-secondary">Gra 1</div>
-                        <div>
-                            <input type="file" accept="image/*" class="form-control">
-                        </div>
-                    </div>
-                </li>
-                <li class="list-group-item bg-secondary">
-                    <div class="d-flex justify-content-between">
-                        <div class="text-secondary">Gra 2</div>
-                        <div>
-                            <input type="file" accept="image/*" class="form-control">
-                        </div>
-                    </div>
-                </li>
-                <li class="list-group-item bg-secondary">
-                    <div class="d-flex justify-content-between">
-                        <div class="text-secondary">Gra 3</div>
-                        <div>
-                            <input type="file" accept="image/*" class="form-control">
-                        </div>
-                    </div>
-                </li>
-                <li class="list-group-item bg-secondary">
-                    <div class="d-flex justify-content-between">
-                        <div class="text-secondary">Gra 4</div>
-                        <div>
-                            <input type="file" accept="image/*" class="form-control">
-                        </div>
-                    </div>
-                </li>
-                <li class="list-group-item bg-secondary">
-                    <div class="d-flex justify-content-between">
-                        <div class="text-secondary">Gra 5</div>
-                        <div>
-                            <input type="file" accept="image/*" class="form-control">
-                        </div>
-                    </div>
-                </li>
-            </ul>
+      <div id="myCarousel" class="carousel slide mb-6" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
         </div>
-        <div class="col-md-9">
-            <div class="jumbotron bg-primary">
-                @auth
-                    <h1 class="display-4 text-white">Witaj, {{ Auth::user()->name }}!</h1>
-                @else
-                    <h1 class="display-4 text-white">Witaj w Mojej Aplikacji Laravel!</h1>
-                @endauth
-                <p class="lead text-white">To jest przykładowa strona główna.</p>
-                <hr class="my-4">
-                <p class="text-white">Możesz zacząć od nawigacji powyżej i sprawdzić dostępne artykuły.</p>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="var(--bs-secondary-color)"/></svg>
+            <div class="container">
+              <div class="carousel-caption text-start">
+                <h1>Example headline.</h1>
+                <p class="opacity-75">Some representative placeholder content for the first slide of the carousel.</p>
+                <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p>
+              </div>
             </div>
-
-            <h2 class="text-primary">Ostatnie Artykuły</h2>
-            <ul>
-                {{-- @foreach($articles as $article)
-                    <li>{{ $article->title }}</li>
-                @endforeach --}}
-            </ul>
+          </div>
+          <div class="carousel-item">
+            <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="var(--bs-secondary-color)"/></svg>
+            <div class="container">
+              <div class="carousel-caption">
+                <h1>Another example headline.</h1>
+                <p>Some representative placeholder content for the second slide of the carousel.</p>
+                <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="var(--bs-secondary-color)"/></svg>
+            <div class="container">
+              <div class="carousel-caption text-end">
+                <h1>One more for good measure.</h1>
+                <p>Some representative placeholder content for the third slide of this carousel.</p>
+                <p><a class="btn btn-lg btn-primary" href="#">Browse gallery</a></p>
+              </div>
+            </div>
+          </div>
         </div>
-    </div>
-</div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+
+
+      <!-- Marketing messaging and featurettes
+      ================================================== -->
+      <!-- Wrap the rest of the page in another container to center all the content. -->
+
+      <div class="container marketing">
+
+        <!-- Three columns of text below the carousel -->
+        <div class="row">
+          <div class="col-lg-4">
+            <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="var(--bs-secondary-color)"/></svg>
+            <h2 class="fw-normal">Heading</h2>
+            <p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
+            <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+          </div><!-- /.col-lg-4 -->
+          <div class="col-lg-4">
+            <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="var(--bs-secondary-color)"/></svg>
+            <h2 class="fw-normal">Heading</h2>
+            <p>Another exciting bit of representative placeholder content. This time, we've moved on to the second column.</p>
+            <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+          </div><!-- /.col-lg-4 -->
+          <div class="col-lg-4">
+            <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="var(--bs-secondary-color)"/></svg>
+            <h2 class="fw-normal">Heading</h2>
+            <p>And lastly this, the third column of representative placeholder content.</p>
+            <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+          </div><!-- /.col-lg-4 -->
+        </div><!-- /.row -->
+      </div>
 @endsection

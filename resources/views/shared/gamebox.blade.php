@@ -1,55 +1,59 @@
 
 @if($view === "search")
-    <div class="card" style="max-width: 540px;">
-        <div class="row g-0">
-          <div class="col-md-4">
+@foreach($games as $game)
+<div class="col">
+    <div class="card shadow-sm">
             @if($game->cover === "no cover available")
-            <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg" class="img-fluid rounded-start" alt="...">
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                    <title>Placeholder</title>
+                    <rect width="100%" height="100%" fill="#55595c"/>
+                    <text x="50%" y="50%" fill="#eceeef" dy=".3em">No Cover Available</text>
+            </svg>
             @else
-            <img src="{{ App\Http\Controllers\SearchController::getUrl($game) }}" class="img-fluid rounded-start" alt="...">
+            <img src="{{ App\Http\Controllers\SearchController::getUrl($game) }}" width="60%" height="50%" class="img-fluid mx-auto" alt="...">
             @endif
-          </div>
-          <div class="col-md-8">
-            <div class="card-body">
-              <h5 class="card-title" >{{ $game->name }}</h5>
-              <p class="card-text">{{$game->description}}</p>
-                <div class="d-flex justify-content-end">
-                    <a href="{{ url('/game', $game->id) }}" class="btn btn-primary btn-sm stretched-link" >Check Game Page</a>
+        <div class="card-body">
+            <h5 class="card-title" >{{ $game->name }}</h5>
+            <p class="card-text" style="height: 100px; overflow-y: scroll;">{{$game->description}}</p>
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                    <a href="{{ url('/game', $game->id) }}" class="btn btn-primary btn-sm" >Check Game Page</a>
                 </div>
             </div>
-          </div>
         </div>
     </div>
-
+</div>
+@endforeach
 
 @elseif($view === "recommend")
-    <h3>Recommended Games</h3>
     @foreach($games as $game)
-    <div class="card mb-3" style="max-width: 540px;">
-        <div class="row g-0">
-          <div class="col-md-4">
-            @if($game->cover === "no cover available")
-            <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg" class="img-fluid rounded-start" alt="...">
-            @else
-            <img src="{{ App\Http\Controllers\SearchController::getUrl($game) }}" class="img-fluid rounded-start" alt="...">
-            @endif
-          </div>
-          <div class="col-md-8">
+    <div class="col">
+        <div class="card shadow-sm">
+                @if($game->cover === "no cover available")
+                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                        <title>Placeholder</title>
+                        <rect width="100%" height="100%" fill="#55595c"/>
+                        <text x="50%" y="50%" fill="#eceeef" dy=".3em">No Cover Available</text>
+                </svg>
+                @else
+                <img src="{{ App\Http\Controllers\SearchController::getUrl($game) }}" width="60%" height="50%" class="img-fluid mx-auto" alt="...">
+                @endif
             <div class="card-body">
-              <h5 class="card-title" >{{ $game->name }}</h5>
-              <p class="card-text">{{$game->description}}</p>
-                <div class="d-flex justify-content-end">
-                    <a href="{{ url('/game', $game->id) }}" class="btn btn-primary btn-sm stretched-link" >Check Game Page</a>
+                <h5 class="card-title" >{{ $game->name }}</h5>
+                <p class="card-text" style="height: 100px; overflow-y: scroll;">{{$game->description}}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                        <a href="{{ url('/game', $game->id) }}" class="btn btn-primary btn-sm" >Check Game Page</a>
+                    </div>
                 </div>
             </div>
-          </div>
         </div>
     </div>
     @endforeach
 
 @elseif($view === "profile")
-@foreach($games as $game)
 
+@foreach($games as $game)
 <div class="col">
         <div class="card shadow-sm">
                 @if($game->cover === "no cover available")
@@ -62,6 +66,7 @@
                 <img src="{{ App\Http\Controllers\SearchController::getUrl($game) }}" width="60%" height="50%" class="img-fluid mx-auto" alt="...">
                 @endif
             <div class="card-body">
+                <h5 class="card-title" >{{ $game->name }}</h5>
                 <p class="card-text" style="height: 100px; overflow-y: scroll;">{{$game->description}}</p>
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">

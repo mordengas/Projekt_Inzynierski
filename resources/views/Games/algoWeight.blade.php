@@ -72,31 +72,6 @@
             </div>
         </div>
     </div>
-
-        {{-- <label for="tryb_gry">Wybierz tryb gry:</label>
-        <select class="form-select" aria-label="Default select example" id = "tryb_gry" name="tryb_gry">
-            <option value="Single Player">Single Player</option>
-            <option value="Multiplayer">Multiplayer</option>
-            <option value="Co-operative">Co-Op</option>
-            <option value="Split screen">Split Screen</option>
-            <option value="Massively Multiplayer Online (MMO)">MMO</option>
-            <option value="Battle Royale">Battle Royale</option>
-        </select>
-        <br>
-        <label for="gatunek">Wybierz gatunek:</label>
-        <select class="form-select" aria-label="Default select example" id = "gatunek" name="gatunek">
-            <option value="Fighting">Fighting</option>
-            <option value="Shooter">Shooter</option>
-            <option value="Music">Music</option>
-            <option value="Platform">Platforms</option>
-            <option value="Puzzle">Puzzle</option>
-            <option value="Racing">Racing</option>
-            <option value="Real Time Strategy (RTS)">RTS</option>
-            <option value="Role-playing (RPG)">RPG</option>
-            <option value="Simulator">Simulator</option>
-            <option value="Sport">Sport</option>
-        </select>
-        <br> --}}
         <div class="row">
         <div class="col-md-6">
             <div class="form-group">
@@ -107,6 +82,7 @@
                     <option value=167>PS 5</option>
                     <option value=49>Xbox One</option>
                     <option value=48>PS 4</option>
+                    <option value=130>Nintendo Switch</option>
                 </select>
             </div>
         </div>

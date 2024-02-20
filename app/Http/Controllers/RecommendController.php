@@ -16,54 +16,34 @@ class RecommendController extends Controller
 
         return view('recommend');
     }
-    public function recommendGames(Request $request)
-    {
-        // Retrieve the current user
-        $user = Auth::user();
 
-        if (!$user) {
-            return response()->json(['error' => 'User not found'], 404);
-        }
+    public function storeGenre(Request $request){
 
-        // Retrieve the user's preferences or any other relevant data
-        $userPreferences = $user->preferences;
-
-        // Perform your recommendation logic here
-        // ...
-
-        // For example, let's recommend some games based on the user's preferences
-        $recommendedGames = MyGame::whereIn('genre', $userPreferences)->get(); // Use the MyGame class
-
-        return response()->json(['games' => $recommendedGames]);
-    }
-
-    public function store(Request $request){
-
-        $preferences = [
-            "2" => 1, // Point-and-click
-            "4" => 1, // Fighting
-            "5" => 0, // Shooter
-            "7" => 1, // Music
-            "8" => 0, // Platform
-            "9" => 0, // Puzzle
-            "10" => 0, // Racing
-            "11" => 1, // Real Time Strategy (RTS)
-            "12" => 0, // Role-playing (RPG)
-            "13" => 1, // Simulator
-            "14" => 0, // Sport
-            "15" => 1, // Strategy
-            "16" => 1, // Turn-based strategy (TBS)
-            "24" => 0, // Tactical
-            "25" => 0, // Hack and slash/Beat 'em up
-            "26" => 1, // Quiz/Trivia
-            "30" => 0, // Pinball
-            "31" => 0, // Adventure
-            "32" => 1, // Indie
-            "33" => 0, // Arcade
-            "34" => 0, // Visual Novel
-            "35" => 1, // Card & Board Game
-            "36" => 1, // MOBA
-        ];
+        // $preferences = [
+        //     "2" => 1, // Point-and-click
+        //     "4" => 1, // Fighting
+        //     "5" => 0, // Shooter
+        //     "7" => 1, // Music
+        //     "8" => 0, // Platform
+        //     "9" => 0, // Puzzle
+        //     "10" => 0, // Racing
+        //     "11" => 1, // Real Time Strategy (RTS)
+        //     "12" => 0, // Role-playing (RPG)
+        //     "13" => 1, // Simulator
+        //     "14" => 0, // Sport
+        //     "15" => 1, // Strategy
+        //     "16" => 1, // Turn-based strategy (TBS)
+        //     "24" => 0, // Tactical
+        //     "25" => 0, // Hack and slash/Beat 'em up
+        //     "26" => 1, // Quiz/Trivia
+        //     "30" => 0, // Pinball
+        //     "31" => 0, // Adventure
+        //     "32" => 1, // Indie
+        //     "33" => 0, // Arcade
+        //     "34" => 0, // Visual Novel
+        //     "35" => 1, // Card & Board Game
+        //     "36" => 1, // MOBA
+        // ];
 
         $userPreferences = [
             "2" => (int)$request->input('point-and-click', 0), // Point-and-click
@@ -126,11 +106,17 @@ class RecommendController extends Controller
         }
     }
 
-        $mygames = MyGame::all();
+        $searchPlatforma ='% '.$request->platforma.' %';
+        $searchYear = "$request->rok_wydania-01-01 00:00:00";
+
+        $mygames = MyGame::where('platforms', 'LIKE', $searchPlatforma)
+        ->where('release_date', '>=', $searchYear)->get();
 
         $neighbors = $this->find_games($userPreferences, $mygames, 3);
+        $gameIds = array_column($neighbors, 'game_id');
+        $mygames_reco = MyGame::whereIn('id', $gameIds)->get()->all();
 
-        return View::make('recommend')->with('recom', $neighbors);
+        return view('recommend')->with('games', $mygames_reco)->with('activeTab', 'content2');
     }
 
 
@@ -167,14 +153,14 @@ public function game_ratings($game, $pref){
 
 public function storeWeight(Request $request){
 
-    $preferences = [
-        "1" => 8, // single player
-        "2" => 2, // multi-player
-        "3" => 7, // co-op
-        "4" => 6, // Split screen
-        "5" => 4, // MMO
-        "6" => 5, // Battle Royale
-    ];
+    // $preferences = [
+    //     "1" => 8, // single player
+    //     "2" => 2, // multi-player
+    //     "3" => 7, // co-op
+    //     "4" => 6, // Split screen
+    //     "5" => 4, // MMO
+    //     "6" => 5, // Battle Royale
+    // ];
 
     $userPreferences = [
         "1" => (int)$request->single_player, // single player
@@ -214,11 +200,18 @@ foreach( $games as $game ){
 
 }
 
-    $mygames = MyGame::all();
+    $searchPlatforma ='% '.$request->platforma.' %';
+    $searchYear = "$request->rok_wydania-01-01 00:00:00";
+
+    $mygames = MyGame::where('platforms', 'LIKE', $searchPlatforma)
+    ->where('release_date', '>=', $searchYear)->get();
 
     $neighbors = $this->find_games_weight($userPreferences, $mygames, 3);
 
-    return View::make('recommend')->with('recom', $neighbors);
+    $gameIds = array_column($neighbors, 'game_id');
+    $mygames_reco = MyGame::whereIn('id', $gameIds)->get()->all();
+
+    return view('recommend')->with('games', $mygames_reco)->with('activeTab', 'content1');
 }
 
 public function find_games_weight($pref, $games, $i){

@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\View;
 
 class GameControllerGraph extends Controller{
 
-    public function graph(){
+    public function graph(Request $request){
 
     // Użycie grafu
     $graph = new Graph();
@@ -47,14 +47,22 @@ class GameControllerGraph extends Controller{
         $graph->addEdge($edge->start, $edge->destination, $edge->weight);
     }
 
-    $vertices = ['Quiz/Trivia', 'MOBA', 'Tactical'];
-
-    $vertex = $graph->traverseGraph($vertices, 3);
-        //dd($vertex);
+    $vertices = $request->input('genres');
+    //dd($vertices);
+    $vertex = $graph->traverseGraph($vertices, (int)$request->range);
+    //dd($vertex);
     $genre_id = array(Genre::where('name', $vertex)->first()->id);
 
-    $games = Game::whereNotNull('platforms')->whereNotNull('genres')->whereIn('genres', $genre_id)
-    ->orderBy('rating','desc' )->limit(3)->get();
+    // $searchPlatforma ='% '.$request->platforma.' %';
+    // $searchYear = "$request->rok_wydania-01-01 00:00:00";
+    $platforma[] = (int)$request->platforma;
+    $rok = (int)$request->rok_wydania;
+
+    $games = Game::whereNotNull('platforms')->whereNotNull('genres')
+    ->whereIn('genres', $genre_id)
+    ->whereIn('platforms', $platforma)
+    ->whereYear('first_release_date', '>=', $rok)
+    ->orderBy('rating', 'desc')->limit(3)->get();
 
         foreach( $games as $game ){
 
@@ -74,13 +82,11 @@ class GameControllerGraph extends Controller{
                     'description' => $game->summary ?? 'no description available',
                 ]);
 
-
-
             }
 
         $mygames = MyGame::whereIn('id', $games->pluck('id'))->get()->all();
 
-        return view('recommend')->with('games', $mygames);
+        return view('recommend')->with('games', $mygames)->with('activeTab', 'content3');
 
     }
 }

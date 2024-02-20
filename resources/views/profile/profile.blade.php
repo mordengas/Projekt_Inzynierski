@@ -5,7 +5,7 @@
     <h1>User Profile</h1>
     <div class="row">
         <div class="col-md-2">
-            @if($user->image)
+            @if($user->image !== "user.png")
             <img class="d-flex justify-content-center align-items-center rounded" src="/images/{{$user->image}}" alt="profile_image" style="height: 140px; background-color: rgb(233, 236, 239);">
             @else
             <div class="d-flex justify-content-center align-items-center rounded" style="height: 140px; background-color: rgb(233, 236, 239);">

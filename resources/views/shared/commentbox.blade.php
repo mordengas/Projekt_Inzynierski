@@ -5,7 +5,7 @@
                 @if($comment->user->image)
                 <img class="image rounded-circle" src="/images/{{$comment->user->image}}" alt="profile_image" style="width: 40px;height: 40px; padding: 0px; margin: 0px; ">
                 @endif
-                <a href="{{ url('/profile', $comment->user_id) }}">
+                <a href="{{ url('/user', $comment->user_id) }}">
                     {{ $comment->user->name }}
                 </a>
             </h5>

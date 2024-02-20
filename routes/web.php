@@ -49,7 +49,8 @@ Route::post('/library/state', [LibraryController::class, 'setState'])->name('lib
 Route::post('/library/add', [LibraryController::class, 'addGame'])->name('library.addGame');
 Route::post('/library/score', [LibraryController::class, 'setOrUpdateScore'])->name('library.setScore');
 
-Route::post('/recommend/store', [RecommendController::class, 'store'])->name('recommend.storeweight');
+Route::get('/recommend',[RecommendController::class,'index'])->name('recommend.index');
+Route::post('/recommend/storegenre', [RecommendController::class, 'storeGenre'])->name('recommend.storegenre');
 Route::post('/recommend/storeweight', [RecommendController::class, 'storeWeight'])->name('recommend.storeweight');
 Route::post('/recommend/graph', [GameControllerGraph::class, 'graph'])->name('recommend.storegraph');
 
