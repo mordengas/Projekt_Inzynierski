@@ -1,5 +1,5 @@
 @foreach($comments as $comment)
-    <div class="card bg-light" style="margin-bottom: 10px;">
+    <div class="card" data-bs-theme="auto" style="margin-bottom: 10px;">
         <div class="card-body">
             <div class="row  justify-contetn-between">
                 <div class="col text-left">
@@ -9,7 +9,7 @@
                         @else
 
                         @endif
-                        <a href="{{ url('/user', $comment->user_id) }}">
+                        <a class="link-body-emphasis text-decoration-none" href="{{ url('/user', $comment->user_id) }}">
                             {{ $comment->user->name }}
                         </a>
                     </h5>
@@ -31,7 +31,7 @@
             </div>
 
             <p class="card-text">
-                <div class="bg-white p-2 border">{{ $comment->content }}</div>
+                <div class="p-2 border" data-bs-theme="auto">{{ $comment->content }}</div>
             </p>
 
             <div class="row  justify-contetn-between">
@@ -41,15 +41,21 @@
 
                 <div class="col text-right">
                     <div class="d-flex flex-row-reverse">
-                    @if(auth()->check())
-                    @if(auth()->user()->id === $comment->user_id)
-                    <form action="" method="POST">
+                    @guest
+                    @else
+                    <form action="{{route('like.toggle')}}" method="POST">
                         @csrf
-                        @method('POST')
-                        <button type="submit" class="btn btn-danger btn-sm">Like</button>
+                        <input type="hidden" name="comment_id" value="{{$comment->id}}">
+                        <button type="submit" class="btn btn-link">
+                            @if (App\Models\Like::hasUserLikedComment(auth()->user()->id, $comment->id))
+                                <span id="boot-icon" class="bi bi-heart-fill" style="font-size: 20px; color: rgb(255, 0, 0);"></span>
+                            @else
+                                <span id="boot-icon" class="bi bi-heart" style="font-size: 20px; opacity: 1; -webkit-text-stroke-width: 0px;"></span>
+                            @endif
+                        </button>
                     </form>
-                    @endif
-                    @endif
+                    @endguest
+                    <p>{{ $comment->likes->count() }} Likes</p>
                     </div>
                 </div>
             </div>

@@ -10,6 +10,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\RecommendController;
 use App\Http\Controllers\GameControllerGraph;
 use App\Http\Controllers\GraphWeightController;
+use App\Http\Controllers\LikeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,7 +39,9 @@ Route::resource('library', LibraryController::class);
 
 Route::resource('recommend', RecommendController::class);
 
-// Route::get('/recommend', [RecommendController::class, 'index']);
+Route::resource('like', LikeController::class);
+
+Route::post('/like/toogle', [LikeController::class, 'toggle'])->name('like.toggle')->middleware('auth');
 
 Route::get('/admin', function () {
     return view('admin');

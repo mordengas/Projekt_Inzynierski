@@ -14,7 +14,7 @@ class Like extends Model
         'comment_id',
     ];
 
-    public static function hasUserLikedGame($userId, $commentId)
+    public static function hasUserLikedComment($userId, $commentId)
     {
         return self::where('user_id', $userId)
                     ->where('comment_id', $commentId)

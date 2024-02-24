@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Like;
+use App\Models\Comment;
 use App\Http\Requests\StoreLikeRequest;
 use App\Http\Requests\UpdateLikeRequest;
+use Illuminate\Http\Request;
 
 class LikeController extends Controller
 {
@@ -63,4 +65,31 @@ class LikeController extends Controller
     {
         //
     }
+
+    public function toggle(Request $request)
+    {
+        $validatedData = $request->validate([
+            'comment_id' => 'required',
+        ]);
+
+        $user = auth()->user();
+
+        // Check if user has already liked the comment
+        $existingLike = Like::where('user_id', $user->id)
+                        ->where('comment_id', $validatedData['comment_id'])
+                        ->first();
+        if ($existingLike) {
+            // Unlike the comment
+            $existingLike->delete();
+        } else {
+            // Like the comments
+            Like::create([
+                'user_id' => $user->id,
+                'comment_id' => $validatedData['comment_id'],
+            ]);
+        }
+
+        return redirect()->back();
+    }
+
 }

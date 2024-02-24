@@ -2,7 +2,7 @@
 
 @section('content')
 <h1>Graph Weights</h1>
-    {{-- <div class="container-fludid">
+    <div class="container-fludid">
     <h1>Graph Weights</h1>
     <a href="{{ route('graphWeights.create') }}" class="btn btn-primary">Create Graph Weight</a>
     <table class="table table-bordered">
@@ -27,5 +27,5 @@
             @endforeach
         </tbody>
     </table>
-    </div> --}}
+    </div>
 @endsection
