@@ -8,6 +8,7 @@ export default defineConfig({
                 'resources/sass/app.scss',
                 'resources/js/app.js',
                 'resources/js/color-modes.js',
+                'resources/css/styles.css',
             ],
             refresh: true,
         }),

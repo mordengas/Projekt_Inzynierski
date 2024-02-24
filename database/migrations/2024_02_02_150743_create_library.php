@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('libraries', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
-            $table->foreignId('game_id');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('game_id');
+            $table->foreign('game_id')->references('id')->on('my_games')->onDelete('cascade');
             $table->enum('state', ['completed', 'playing', 'plan to play']);
             $table->integer('score')->nullable();
             $table->timestamps();

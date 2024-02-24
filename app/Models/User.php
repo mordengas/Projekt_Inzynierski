@@ -56,4 +56,45 @@ class User extends Authenticatable
 //     protected $appends = [
 //         'profile_photo_url',
 //     ];
+
+    /**
+     * Get the user's library.
+     */
+    public function library()
+    {
+        return $this->hasMany(Library::class);
+    }
+
+    /**
+     * Define a one-to-many relationship with the Comment model.
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+
+    /**
+     * Define a one-to-many relationship with the Likes model.
+     */
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
+    /**
+     * Check if the user has a specific role.
+     *
+     * @param string $role
+     * @return bool
+     */
+    public function hasRole(string $role): bool
+    {
+        if ($this->role === $role) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 }

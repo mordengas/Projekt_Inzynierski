@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Comment extends Model
 {
     protected $fillable = [
+        'id',
         'content',
         'user_id',
         'game_id',
@@ -27,4 +28,17 @@ class Comment extends Model
     {
         return $this->date;
     }
+
+    public function countLikes()
+    {
+        return $this->likes()->count();
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
+
+
 }

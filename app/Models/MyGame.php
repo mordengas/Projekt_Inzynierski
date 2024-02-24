@@ -28,6 +28,23 @@ class MyGame extends Model
         'description',
     ];
 
+
+    /**
+     * Get the library that has many games.
+     */
+    public function library()
+    {
+        return $this->hasMany(Library::class);
+    }
+
+        /**
+     * Get the library that has many games.
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     /**
      * Check if the game has a cover image.
      *

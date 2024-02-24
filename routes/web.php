@@ -9,6 +9,7 @@ use App\Http\Controllers\LibraryController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RecommendController;
 use App\Http\Controllers\GameControllerGraph;
+use App\Http\Controllers\GraphWeightController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,8 @@ Route::get('/', function () {
     return view('home');
 });
 
+Route::resource('/admin/graphWeights', GraphWeightController::class)->middleware('adminRedirect');
+
 Route::resource('comments', CommentController::class);
 
 Route::resource('search', SearchController::class);
@@ -37,7 +40,9 @@ Route::resource('recommend', RecommendController::class);
 
 // Route::get('/recommend', [RecommendController::class, 'index']);
 
-
+Route::get('/admin', function () {
+    return view('admin');
+})->middleware('adminRedirect');
 
 Route::get('/game',[CommentController::class,'index']);
 

@@ -14,5 +14,4 @@ class GraphWeight extends Model
         'weight',
     ];
 
-    // Add any additional methods or relationships here
 }

@@ -26,7 +26,7 @@
     <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="{{ asset('build/assets/css/styles.css') }}" rel="stylesheet">
-    {{-- @vite('resources/css/styles.css') --}}
+    @vite('resources/css/styles.css')
     <style>
 
         /* Carousel base class */
@@ -218,6 +218,15 @@
             cursor: default; /* Disables hover cursor */
             pointer-events: none; /* Disables clicking */
         }
+
+        .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
     </style>
 
 </head>
@@ -353,22 +362,52 @@
                 </div>
             </div>
         </nav>
-
-        @yield('content')
-
-    </div>
-
-        <div class="container mt-auto">
-            <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-            <p class="col-md-4 mb-0 text-body-secondary">&copy; 2023 {{ config('app.name', 'Laravel') }}</p>
-
-            <ul class="nav col-md-4 justify-content-end">
-                <li class="nav-item"><a href="/home" class="nav-link px-2 text-body-secondary">Home</a></li>
-                <li class="nav-item"><a href="/recommend" class="nav-link px-2 text-body-secondary">Recommend</a></li>
-                <li class="nav-item"><a href="/search" class="nav-link px-2 text-body-secondary">Search</a></li>
+        <div class="d-flex align-items-stretch">
+            <div class="row">
+            <div class="d-flex flex-column flex-grow-1 p-3 bg-body-tertiary" style="max-width: 280px;">
+            <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+              <span class="fs-4">Admin Panel</span>
+            </a>
+            <hr>
+            <ul class="nav nav-pills flex-column mb-auto">
+              <li class="nav-item">
+                <a href="{{route('graphWeights.index')}}" class="nav-link active" aria-current="page">
+                  Graph Weights
+                </a>
+              </li>
+              <li>
+                <a href="#" class="nav-link link-body-emphasis">
+                  Users
+                </a>
+              </li>
+              <li>
+                <a href="#" class="nav-link link-body-emphasis">
+                  Likes
+                </a>
+              </li>
+              <li>
+                <a href="#" class="nav-link link-body-emphasis">
+                  Libraraies
+                </a>
+              </li>
+              <li>
+                <a href="#" class="nav-link link-body-emphasis">
+                  Comments
+                </a>
+              </li>
+              <li>
+                <a href="#" class="nav-link link-body-emphasis">
+                  Games
+                </a>
+              </li>
             </ul>
-            </footer>
+          </div>
+            <div class="col-md-8">
+                @yield('content')
+            </div>
         </div>
+    </div>
+    </div>
     </body>
     <script>
     (() => {
@@ -447,3 +486,4 @@
     })();
     </script>
 </html>
+

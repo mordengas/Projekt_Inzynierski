@@ -36,4 +36,22 @@ class CommentController extends Controller
         // Return a response or redirect to a success page
         return redirect()->route('game.show', ['game' => $comment->game_id]);
     }
+
+    public function destroy(Comment $comment)
+    {
+        // Check if the comment exists
+        if ($comment) {
+            // Delete the comment
+            $comment->delete();
+
+            // Return a response or redirect to a success page
+            return redirect()->back()->with('success', 'Comment deleted successfully.');
+        } else {
+            // Return a response or redirect to an error page
+            return redirect()->back()->with('error', 'Comment not found.');
+        }
+
+    }
+
+
 }
