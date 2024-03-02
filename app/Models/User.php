@@ -25,6 +25,7 @@ class User extends Authenticatable
         'password',
         'description',
         'image',
+        'role'
     ];
 
     /**
@@ -95,6 +96,14 @@ class User extends Authenticatable
         }else{
             return false;
         }
+    }
+
+    public static function search($search)
+    {
+        return empty($search) ? static::query()
+            : static::where('name', 'like', '%'.$search.'%')
+                ->orWhere('email', 'like', '%'.$search.'%')
+                ->orWhere('description', 'like', '%'.$search.'%');
     }
 
 }

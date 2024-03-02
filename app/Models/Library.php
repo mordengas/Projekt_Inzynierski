@@ -13,6 +13,14 @@ class Library extends Model
 
     ];
 
+    public function myGame()
+    {
+        return $this->belongsTo(MyGame::class);
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 
     public static function hasGameInLibrary($userId, $gameId)
     {
@@ -23,9 +31,11 @@ class Library extends Model
 
     public static function getGameState($userId, $gameId)
     {
-        return self::where('user_id', $userId)
+        $state = self::where('user_id', $userId)
                     ->where('game_id', $gameId)
                     ->value('state');
+
+        return ucfirst($state);
     }
 
     public static function getScore($userId, $gameId)

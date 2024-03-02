@@ -61,8 +61,16 @@ class LibraryController extends Controller
         return redirect()->back();
     }
 
-    public function deleteGame($game_id, $user_id)
+    public function deleteGame(Request $request)
     {
+        $validatedData = $request->validate([
+            'game_id' => 'required',
+            'user_id' => 'required',
+        ]);
+
+        $game_id = $validatedData['game_id'];
+        $user_id = $validatedData['user_id'];
+
         $library = Library::where('user_id', $user_id)
             ->where('game_id', $game_id)
             ->first();

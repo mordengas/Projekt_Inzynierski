@@ -41,15 +41,14 @@
                     <input type="hidden" name="game_id" value="{{ $game->id }}">
                     <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
                 <ul class="dropdown-menu">
-                    <button class="dropdown-item" type="submit" name="state" value="plan to play">Want to play</button>
+                    <button class="dropdown-item" type="submit" name="state" value="plan to play">Plan to play</button>
                     <button class="dropdown-item" type="submit" name="state" value="playing">Playing</button>
-                    <button class="dropdown-item" type="submit" name="state" value="completed">Finished</button>
+                    <button class="dropdown-item" type="submit" name="state" value="completed">Completed</button>
                 </ul>
                 </form>
               </div>
 
 
-            @if(auth()->check())
             @if( App\Models\Library::hasGameInLibrary(auth()->user()->id, $game->id))
                 <button class="btn btn-primary float-right" disabled>In Library</button>
             @else
@@ -60,10 +59,10 @@
                     <button type="submit" class="btn btn-primary float-right">Add to Library</button>
                 </form>
             @endif
-            @endif
 
 
             </div>
+            <div class="row flex-shrink-0">
             <form action="{{ route('library.setScore') }}" method="POST">
                 @csrf
                 <input type="hidden" name="game_id" value="{{ $game->id }}">
@@ -83,7 +82,17 @@
                 <label for="star1" title="text">1 star</label>
             </div>
             </form>
-
+            </div>
+            <div class="d-flex justify-content-end">
+            @if (App\Models\Library::hasGameInLibrary(auth()->user()->id, $game->id))
+            <form action="{{route('library.deleteGame')}}" method="POST">
+              @csrf
+              <input type="hidden" name="game_id" value="{{ $game->id }}">
+              <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+              <button type="submit" class="btn btn-danger float-right">Delete</button>
+            </form>
+            @endif
+            </div>
             <script>
                 document.querySelectorAll('input[type="radio"]').forEach((input) => {
                     input.addEventListener('click', () => {
@@ -94,6 +103,18 @@
             @endguest
         </div>
         <h3>Add Comment</h3>
+        @guest
+        <form>
+            <div class="form-group">
+                <label for="comment">Comment:</label>
+                <textarea class="form-control" id="content" name="content" disabled></textarea>
+            </div>
+            <br>
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary" disabled>Log in to comment</button>
+            </div>
+        </form>
+        @else
         <form action="{{ route('comments.store') }}" method="POST">
             @csrf
             <input type="hidden" name="game_id" value="{{(int)$game->id}}">
@@ -102,17 +123,23 @@
             @endif
             <div class="form-group">
                 <label for="comment">Comment:</label>
+                @if(auth()->check())
                 <textarea class="form-control" id="content" name="content" required></textarea>
+                @else
+                <textarea class="form-control" id="content" name="content" disabled></textarea>
+                @endif
             </div>
             <br>
             <div class="d-flex justify-content-end">
                 @if(auth()->check())
                 <button type="submit" class="btn btn-primary">Add Comment</button>
                 @else
-                <button type="submit" class="btn btn-primary" disabled>Add Comment</button>
+                <button type="submit" class="btn btn-primary" disabled>Log in to comment</button>
                 @endif
             </div>
         </form>
+        @endguest
+
 
         <h2>Comments</h2>
         @include('shared.commentbox')

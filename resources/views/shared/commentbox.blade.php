@@ -42,6 +42,13 @@
                 <div class="col text-right">
                     <div class="d-flex flex-row-reverse">
                     @guest
+                    <div class="d-flex align-items-center">
+                            <span id="boot-icon" class="bi bi-heart-fill" style="font-size: 20px; color: rgb(255, 0, 0); margin-top: 7px; margin-bottom: 16px; margin-left: 13px; margin-right: 13px;"></span>
+                    </div>
+
+                    <div class="d-flex align-items-center">
+                        <div class="flex-column">{{ $comment->likes->count() }}</div>
+                    </div>
                     @else
                     <form action="{{route('like.toggle')}}" method="POST">
                         @csrf
@@ -54,8 +61,10 @@
                             @endif
                         </button>
                     </form>
+                    <div class="d-flex align-items-center">
+                        <div class="flex-column">{{ $comment->likes->count() }}</div>
+                    </div>
                     @endguest
-                    <p>{{ $comment->likes->count() }} Likes</p>
                     </div>
                 </div>
             </div>

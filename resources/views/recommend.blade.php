@@ -52,6 +52,7 @@
         </div>
         <div class="tab-pane fade" id="content3" role="tabpanel" aria-labelledby="tab3">
             @include('Games.algoGraph')
+            <livewire:show-graph-component />
         </div>
     </div>
     @endif

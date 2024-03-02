@@ -17,7 +17,7 @@ class GraphWeightController extends Controller
     {
         $graphWeights = GraphWeight::all();
 
-        return view('admin.graphWeights.index', compact('graphWeights'));
+        return view('admin.graphWeights.index', compact('graphWeights'))->with('view','admin');
     }
 
     /**
@@ -27,7 +27,7 @@ class GraphWeightController extends Controller
      */
     public function create()
     {
-        return view('admin.graphWeights.create');
+        return view('admin.graphWeights.create')->with('view','admin');
     }
 
     /**
@@ -59,7 +59,7 @@ class GraphWeightController extends Controller
     public function edit(GraphWeight $graphWeight)
     {
 
-        return view('admin.graphWeights.edit', compact('graphWeight'));
+        return view('admin.graphWeights.edit', compact('graphWeight'))->with('view','admin');
     }
 
     /**
@@ -96,6 +96,6 @@ class GraphWeightController extends Controller
         $graphWeight = GraphWeight::findOrFail($id);
         $graphWeight->delete();
 
-        return redirect()->route('graph_weights.index')->with('success', 'Graph weight deleted successfully!');
+        return redirect()->route('graphWeights.index')->with('success', 'Graph weight deleted successfully!');
     }
 }

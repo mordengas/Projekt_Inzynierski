@@ -244,22 +244,22 @@ class GraphWeightSeeder extends Seeder
             ],
 
             [
-                'start' => 'Visial Novel',
+                'start' => 'Visual Novel',
                 'destination' => 'Adventure',
                 'weight' => 8
             ],
             [
-                'start' => 'Visial Novel',
+                'start' => 'Visual Novel',
                 'destination' => 'Point-and-click',
                 'weight' => 8
             ],
             [
-                'start' => 'Visial Novel',
+                'start' => 'Visual Novel',
                 'destination' => 'Role-playing (RPG)',
                 'weight' => 6
             ],
             [
-                'start' => 'Visial Novel',
+                'start' => 'Visual Novel',
                 'destination' => 'Simulator',
                 'weight' => 6
             ],

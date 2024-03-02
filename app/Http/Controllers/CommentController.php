@@ -16,6 +16,7 @@ class CommentController extends Controller
 
     public function store(Request $request)
     {
+        if(auth()->check()){
         // Validate the request data
         $validatedData = $request->validate([
             'content' => 'required|string',
@@ -32,9 +33,9 @@ class CommentController extends Controller
 
         // Save the comment to the database
         $comment->save();
-
+        }
         // Return a response or redirect to a success page
-        return redirect()->route('game.show', ['game' => $comment->game_id]);
+        return redirect()->back();
     }
 
     public function destroy(Comment $comment)

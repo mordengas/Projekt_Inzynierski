@@ -2,8 +2,8 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-bs-theme="auto">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -11,11 +11,11 @@
     <title>{{ config('app.name', 'PlayGuide') }}</title>
 
     <!-- Scripts -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
-    <script src="{{ asset('build/assets/js/color-modes.js') }}" defer></script>
+    @livewireScripts
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -26,8 +26,7 @@
     <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link href="{{ asset('build/assets/css/styles.css') }}" rel="stylesheet">
-    {{-- @vite('resources/css/styles.css') --}}
+    @livewireStyles
     <style>
 
         /* Carousel base class */
@@ -220,6 +219,19 @@
             pointer-events: none; /* Disables clicking */
         }
 
+        /* graph styles */
+        .arrow {
+            fill: #999;
+        }
+        .edge-text {
+            font-size: 12px;
+            fill: #333;
+            pointer-events: none;
+        }
+        .node text {
+            font-size: 14px;
+            text-anchor: middle;
+        }
 
     </style>
 
@@ -306,9 +318,6 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="/recommend">Recommend</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/recommend">Search</a>
-                            </li>
                         </ul>
                     </ul>
 
@@ -346,6 +355,11 @@
                                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
+                                    @if(auth()->user()->role === 'admin')
+                                    <a class="dropdown-item" href="{{ route('admin') }}">
+                                        {{ __('Admin Panel') }}
+                                    </a>
+                                    @endif
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
@@ -361,6 +375,8 @@
 
     </div>
 
+        @if( isset($view) && $view === 'admin')
+        @else
         <div class="container mt-auto">
             <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
             <p class="col-md-4 mb-0 text-body-secondary">&copy; 2023 {{ config('app.name', 'Laravel') }}</p>
@@ -368,10 +384,10 @@
             <ul class="nav col-md-4 justify-content-end">
                 <li class="nav-item"><a href="/home" class="nav-link px-2 text-body-secondary">Home</a></li>
                 <li class="nav-item"><a href="/recommend" class="nav-link px-2 text-body-secondary">Recommend</a></li>
-                <li class="nav-item"><a href="/search" class="nav-link px-2 text-body-secondary">Search</a></li>
             </ul>
             </footer>
         </div>
+        @endif
     </body>
     <script>
     (() => {

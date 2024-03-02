@@ -6,10 +6,9 @@
     {{ session()->get('message') }}
     </div>
     @endif
-    @yield('graph')
     <div class="container">
         <br>
-        <a href="{{ route('graphWeights.create') }}" class="btn btn-primary">Create Graph Weight</a>
-        <livewire:graph-weights-table />
+        <a href="{{ route('users.create') }}" class="btn btn-primary">Create User</a>
+        <livewire:users-table />
     </div>
 @endsection

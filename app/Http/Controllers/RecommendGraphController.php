@@ -10,7 +10,7 @@ use App\Models\GraphWeight;
 use MarcReichel\IGDBLaravel\Models\Genre;
 use Illuminate\Support\Facades\View;
 
-class GameControllerGraph extends Controller{
+class RecommendGraphController extends Controller{
 
     public function graph(Request $request){
 
@@ -62,7 +62,7 @@ class GameControllerGraph extends Controller{
     ->whereIn('genres', $genre_id)
     ->whereIn('platforms', $platforma)
     ->whereYear('first_release_date', '>=', $rok)
-    ->orderBy('rating', 'desc')->limit(3)->get();
+    ->orderBy('rating', 'desc')->limit(20)->get();
 
         foreach( $games as $game ){
 
@@ -84,9 +84,44 @@ class GameControllerGraph extends Controller{
 
             }
 
-        $mygames = MyGame::whereIn('id', $games->pluck('id'))->get()->all();
+            $mygames = MyGame::whereIn('id', $games->pluck('id'))->get()->all();
+            $gamesWithScores = MyGame::getGamesWithMeanScores();
 
-        return view('recommend')->with('games', $mygames)->with('activeTab', 'content3');
+            $gameResults = [];
+            foreach($mygames as $mygame){
+                foreach($gamesWithScores as $gameWithScore){
+                    if($mygame['id'] === $gameWithScore['game_id']){
+                        if($gameWithScore['mean_score'] !== null){
+                            $gameResults[] = [
+                                'id' => $mygame['id'],
+                                'final_score' => ($mygame['rating'] * 0.7) + ($gameWithScore['mean_score'] * 20 * 0.3)
+                            ];
+                        }else{
+                            $gameResults[] = [
+                                'id' => $mygame['id'],
+                                'final_score' => $mygame['rating']
+                            ];
+                        }
+                    }
+                }
+            }
+
+            usort($gameResults, function ($game1, $game2) {
+                // Ensure final_score is a number for comparison
+                $finalScore1 = (float) $game1['final_score'];
+                $finalScore2 = (float) $game2['final_score'];
+
+                // Sort in descending order based on final_score
+                return $finalScore2 <=> $finalScore1;
+            });
+
+            $top3Games = array_slice($gameResults, 0, 3);
+            $ids = array_column($top3Games, 'id');
+
+            $recommendedGames = MyGame::whereIn('id', $ids)->get()->all();
+
+
+        return view('recommend')->with('games', $recommendedGames)->with('activeTab', 'content3');
 
     }
 }
