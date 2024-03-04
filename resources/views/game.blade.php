@@ -102,19 +102,11 @@
             </script>
             @endguest
         </div>
-        <h3>Add Comment</h3>
+
         @guest
-        <form>
-            <div class="form-group">
-                <label for="comment">Comment:</label>
-                <textarea class="form-control" id="content" name="content" disabled></textarea>
-            </div>
-            <br>
-            <div class="d-flex justify-content-end">
-                <button type="submit" class="btn btn-primary" disabled>Log in to comment</button>
-            </div>
-        </form>
+
         @else
+        <h3>Add Comment</h3>
         <form action="{{ route('comments.store') }}" method="POST">
             @csrf
             <input type="hidden" name="game_id" value="{{(int)$game->id}}">
@@ -142,7 +134,12 @@
 
 
         <h2>Comments</h2>
+        @if(count($comments) === 0)
+        <h3>No comments</h3>
+        @else
         @include('shared.commentbox')
+        @endif
+
     </div>
 </div>
 @endsection

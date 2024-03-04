@@ -9,7 +9,14 @@
     @yield('graph')
     <div class="container">
         <br>
-        <a href="{{ route('graphWeights.create') }}" class="btn btn-primary">Create Graph Weight</a>
+        <div class="row d-flex justify-content-between">
+            <div class="col">
+                <a href="{{ route('graphWeights.create') }}" class="btn btn-primary">Create Graph Weight</a>
+            </div>
+            <div class="col">
+                @livewire('show-graph-modal')
+            </div>
+        </div>
         <livewire:graph-weights-table />
     </div>
 @endsection

@@ -27,35 +27,35 @@ use App\Models\GraphWeight;
 |
 */
 
-Route::get('/admin/graph', function(){
-    $genres = [
-        'Fighting',
-        'Shooter',
-        'Music',
-        'Platform',
-        'Puzzle',
-        'Racing',
-        'Real Time Strategy (RTS)',
-        'Role-playing (RPG)',
-        'Simulator',
-        'Sport',
-        'Strategy',
-        'Turn-based strategy (TBS)',
-        'Tactical',
-        'Quiz/Trivia',
-        "Hack and slash/Beat 'em up",
-        'Pinball',
-        'Adventure',
-        'Arcade',
-        'Visual Novel',
-        'Indie',
-        'Card & Board Game',
-        'MOBA',
-        'Point-and-click',
-      ];
-    $edges = GraphWeight::all();
-    return view('graph')->with('edges', $edges)->with('genres', $genres);
-});
+// Route::get('/admin/graph', function(){
+//     $genres = [
+//         'Fighting',
+//         'Shooter',
+//         'Music',
+//         'Platform',
+//         'Puzzle',
+//         'Racing',
+//         'Real Time Strategy (RTS)',
+//         'Role-playing (RPG)',
+//         'Simulator',
+//         'Sport',
+//         'Strategy',
+//         'Turn-based strategy (TBS)',
+//         'Tactical',
+//         'Quiz/Trivia',
+//         "Hack and slash/Beat 'em up",
+//         'Pinball',
+//         'Adventure',
+//         'Arcade',
+//         'Visual Novel',
+//         'Indie',
+//         'Card & Board Game',
+//         'MOBA',
+//         'Point-and-click',
+//       ];
+//     $edges = GraphWeight::all();
+//     return view('graph')->with('edges', $edges)->with('genres', $genres);
+// });
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
@@ -82,7 +82,7 @@ Route::resource('like', LikeController::class);
 Route::post('/like/toogle', [LikeController::class, 'toggle'])->name('like.toggle')->middleware('auth');
 
 Route::get('/admin', function () {
-    return view('admin');
+    return redirect()->route('graphWeights.index');
 })->name('admin')->middleware('adminRedirect');
 
 Route::get('/game',[CommentController::class,'index']);

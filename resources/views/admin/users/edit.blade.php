@@ -12,7 +12,7 @@
       </ul>
     </div>
   @endif
-  <form action="{{ route('users.update', $user->id) }}" method="POST">
+  <form action="{{ route('users.update', $user->id) }}" enctype="multipart/form-data" method="POST">
     @csrf
     @method('PUT')
     <div class="mb-3">
@@ -31,6 +31,21 @@
       <label for="description" class="form-label">Description</label>
       <textarea name="description" id="description" class="form-control">{{ $user->description }}</textarea>
     </div>
+    @if($user->role === "user")
+    <div class="mb-3">
+        <input class="form-check-input" type="checkbox" value="1" id="isAdmin" name="isAdmin">
+        <label class="form-check-label" for="flexCheckDefault">
+          Admin
+        </label>
+    </div>
+    @else
+    <div class="mb-3">
+        <input class="form-check-input" type="checkbox" value="1" id="isAdmin" name="isAdmin" checked>
+        <label class="form-check-label" for="flexCheckDefault">
+          Admin
+        </label>
+    </div>
+    @endif
     <div class="mb-3">
       <label for="image" class="form-label">Image</label>
       <input type="file" name="image" id="image" class="form-control">

@@ -1,20 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Livewire;
 
+use Livewire\Component;
 
-use App\Models\GraphWeight; // Import the MyGame class
+use App\Models\GraphWeight;
 
-
-class RecommendController extends Controller
+class ShowGraphModal extends Component
 {
-    public function index()
+    public function render()
     {
-        // $user_id = Auth::user()->id;
-        // $library = User::find($user_id)->library()->get();
-        // $games = MyGame::whereIn('id', $library->pluck('game_id'))->get()->all();
-
-        // dd(MyGame::getTopThreeGenres($games));
         $genres = [
             'Fighting',
             'Shooter',
@@ -41,8 +36,7 @@ class RecommendController extends Controller
             'Point-and-click',
           ];
         $edges = GraphWeight::all();
-        // return view('recommend')->with('edges', $edges)->with('genres', $genres);
-        return view('recommend');
-    }
 
+        return view('livewire.show-graph-modal')->with('edges', $edges)->with('genres', $genres);
+    }
 }

@@ -44,7 +44,8 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:8',
-            'description' => 'string'
+            'description' => 'string|nullable',
+            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         // Create a new user
@@ -53,6 +54,23 @@ class UserController extends Controller
         $user->email = $validatedData['email'];
         $user->description = $validatedData['description'];
         $user->password = bcrypt($validatedData['password']);
+
+        if($request->input('isAdmin') !== null)
+        {
+            $user->role = 'admin';
+        }else{
+            $user->role = 'user';
+        }
+
+        if ($request->image !== null) {
+            // Handle image upload
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+            $user->image = $imageName;
+            }else{
+
+            }
+
         $user->save();
 
         // Return a response
@@ -74,20 +92,44 @@ class UserController extends Controller
             return response()->json(['message' => 'User not found'], 404);
         }
 
-        $user_id = $user->id;
-        // Validate the request data
-        $validatedData = $request->validate([
-            'name' => 'string|max:255',
-            'email' => 'email|unique:users,email,' . $user_id,
-            'password' => 'string|min:8',
-            'description' => 'nullable|string'
-        ]);
+        // Validate the request data (excluding password if not provided)
+        $rules = [
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'description' => 'nullable|string',
+            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ];
+
+        if ($request->password !== null) {
+            $rules['password'] = 'string|min:8';
+        }
+
+        if($request->input('isAdmin') !== null)
+        {
+            $user->role = 'admin';
+        }else{
+            $user->role = 'user';
+        }
+
+        $validatedData = $request->validate($rules);
 
         // Update the user
-        $user->name = $validatedData['name'];
-        $user->email = $validatedData['email'];
-        $user->description = $validatedData['description'];
-        $user->password = bcrypt($validatedData['password']);
+        $user->fill($validatedData);
+
+        // Handle password update if provided
+        if ($request->password !== null) {
+            $user->password = bcrypt($validatedData['password']);
+        }
+
+        if ($request->image !== null) {
+        // Handle image upload
+        $imageName = time() . '.' . $request->image->extension();
+        $request->image->move(public_path('images'), $imageName);
+        $user->image = $imageName;
+        }else{
+
+        }
+
         $user->save();
 
         // Return a response
@@ -95,10 +137,10 @@ class UserController extends Controller
     }
 
 
-    public function destroy(Request $request)
+    public function destroy(Request $request, $id)
     {
         // Find the user
-        $user = User::find($request->id);
+        $user = User::findOrFail($id);
 
         if (!$user) {
             return response()->json(['message' => 'User not found'], 404);

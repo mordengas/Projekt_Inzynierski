@@ -106,7 +106,8 @@
           <th scope="col">Start</th>
           <th scope="col">Destination</th>
           <th scope="col">Weight</th>
-          <th scope="col">Action</th>
+          <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
         </tr>
       </thead>
       <tbody>
@@ -118,15 +119,20 @@
           <td>{{ $graphWeight->weight }}</td>
           <td>
             <a href="{{ route('graphWeights.edit',[$graphWeight]) }}" class="btn btn-success btn-sm">Edit</a>
+          </td>
+          <td>
             <form action="{{ route('graphWeights.destroy',$graphWeight->id) }}" method="POST">
-              @csrf
-              @method('DELETE')
-              <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-            </form>
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+              </form>
           </td>
         </tr>
         @endforeach
       </tbody>
     </table>
-    {!! $graphWeights->links() !!}
+    <div>
+        {!! $graphWeights->links() !!}
+    </div>
+
   </div>

@@ -17,7 +17,7 @@
         <div class="col-md-6">
             <h2>{{ $user->name}}</h2>
             @if(isset($user->description))
-            <p style="border: 1px solid grey; border-radius: 5px; height: 100px; width: 500px;">{{ $user->description }}</p>
+            <p style="border: 1px solid grey; border-radius: 5px; height: 100px; width: 500px; overflow: auto; word-wrap: break-word;">{{ $user->description }}</p>
             @else
             <p style="border: 1px solid grey; border-radius: 5px; height: 100px; width: 500px;">No bio.</p>
             @endif

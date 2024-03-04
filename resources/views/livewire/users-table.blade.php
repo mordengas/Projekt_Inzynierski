@@ -9,8 +9,9 @@
                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
               <option value="id">ID</option>
               <option value="name">Name</option>
-              <option value="email">email</option>
-              <option value="description">description</option>
+              <option value="email">Email</option>
+              <option value="description">Description</option>
+              <option value="role">Role</option>
             </select>
           </div>
           <div class="col-md-2">
@@ -36,6 +37,9 @@
               <th scope="col">email</th>
               <th scope="col">Description</th>
               <th scope="col">Image</th>
+              <th scope="col">Role</th>
+              <th scope="col">Edit</th>
+              <th scope="col">Delete</th>
             </tr>
           </thead>
           <tbody>
@@ -44,14 +48,24 @@
               <td>{{ $user->id }}</td>
               <td>{{ $user->name }}</td>
               <td>{{ $user->email }}</td>
-              <td>{{ $user->description }}</td>
+              <td>{{ Str::limit($user->description, 30, '...') }}</td>
+              <td>
+                @if($user->image !== "user.png")
+                <img class="image rounded-circle" src="/images/{{$user->image}}" alt="profile_image" style="width: 40px;height: 40px; padding: 0px; margin: 0px; ">
+                @else
+                No Image.
+                @endif
+              </td>
+              <td>{{ $user->role }}</td>
               <td>
                 <a href="{{ route('users.edit',[$user]) }}" class="btn btn-success btn-sm">Edit</a>
-                <form action="{{ route('users.destroy',$user->id) }}" method="POST">
-                  @csrf
-                  @method('DELETE')
-                  <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                </form>
+              </td>
+              <td>
+                <form action="{{ route('users.destroy',[$user]) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                  </form>
               </td>
             </tr>
             @endforeach

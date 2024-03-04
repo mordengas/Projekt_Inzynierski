@@ -12,8 +12,9 @@
       </ul>
     </div>
   @endif
-  <form action="{{ route('users.store') }}" method="POST">
+  <form action="{{ route('users.store') }}" enctype="multipart/form-data" method="POST">
     @csrf
+    @method('POST')
     <div class="mb-3">
       <label for="name" class="form-label">Name</label>
       <input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}">
@@ -29,6 +30,12 @@
     <div class="mb-3">
       <label for="description" class="form-label">Description</label>
       <textarea name="description" id="description" class="form-control">{{ old('description') }}</textarea>
+    </div>
+    <div class="mb-3">
+        <input class="form-check-input" type="checkbox" value="1" id="isAdmin" name="isAdmin">
+        <label class="form-check-label" for="flexCheckDefault">
+          Admin
+        </label>
     </div>
     <div class="mb-3">
       <label for="image" class="form-label">Image</label>
