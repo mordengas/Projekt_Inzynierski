@@ -36,7 +36,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="nav-link link-body-emphasis">
+                            <a href="{{route('games.index')}}" class="nav-link link-body-emphasis">
                                 Games
                             </a>
                         </li>

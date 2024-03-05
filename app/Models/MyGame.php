@@ -76,37 +76,52 @@ class MyGame extends Model
 
     public static function gameModesToString($gameModes)
     {
-        $gameModes = explode(' ', $gameModes);
-        $textVersions = [];
+        if($gameModes === null){
+            return "No game modes.";
+        }else{
+            $gameModes = explode(' ', $gameModes);
+            $textVersions = [];
 
-        foreach ($gameModes as $mode) {
-            $textVersions[] = GameMode::find((int)$mode)->name;
+            foreach ($gameModes as $mode) {
+                $textVersions[] = GameMode::find((int)$mode)->name;
+            }
+
+            return implode(', ', $textVersions);
         }
 
-        return implode(', ', $textVersions);
     }
     public static function platformsToString($platforms)
     {
-        $platforms = explode(' ', $platforms);
-        $textVersions = [];
+        if($platforms === null){
+            return "No platforms.";
+        }else{
+            $platforms = explode(' ', $platforms);
+            $textVersions = [];
 
-        foreach ($platforms as $platform) {
-            $textVersions[] = Platform::find((int)$platform)->name;
+            foreach ($platforms as $platform) {
+                $textVersions[] = Platform::find((int)$platform)->name;
+            }
+
+            return implode(', ', $textVersions);
         }
 
-        return implode(', ', $textVersions);
     }
 
     public static function genresToString($genres)
     {
-        $genres = explode(' ', $genres);
-        $textVersions = [];
+        if($genres === null){
+            return "No genres.";
+        }else{
+            $genres = explode(' ', $genres);
+            $textVersions = [];
 
-        foreach ($genres as $genre) {
-            $textVersions[] = Genre::find((int)$genre)->name;
+            foreach ($genres as $genre) {
+                $textVersions[] = Genre::find((int)$genre)->name;
+            }
+
+            return implode(', ', $textVersions);
         }
 
-        return implode(', ', $textVersions);
     }
 
     public static function getTopThreeGenres(array $games)

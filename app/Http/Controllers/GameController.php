@@ -8,7 +8,30 @@ use MarcReichel\IGDBLaravel\Models\Game;
 
 class GameController extends Controller
 {
-    public function show($id)
+
+    public function index(){
+        $games = MyGame::all();
+        return view('admin.myGames.index', compact('games'))->with('view','admin');
+    }
+    public function destroy($id)
+    {
+        // Find the MyGame instance
+        $myGame = MyGame::find($id);
+
+        if (!$myGame) {
+            // Handle the case when the MyGame is not found
+            // You can redirect or return an error response
+        }
+
+        // Delete the MyGame instance
+        $myGame->delete();
+
+        // Redirect to the index method to display the remaining MyGames
+        return redirect()->route('games.index');
+
+    }
+
+    public function showGame($id)
     {
         $game = MyGame::find($id);
 
@@ -38,75 +61,5 @@ class GameController extends Controller
         $comments = CommentController::getComments($game->id);
 
         return view('game', compact('game', 'comments'));
-    }
-
-    public function create(Request $request)
-    {
-        // Validate the request data
-        $validatedData = $request->validate([
-            'name' => 'required',
-            'rating' => 'required',
-            // Add validation rules for other fields
-        ]);
-
-        // Create a new MyGame instance
-        $myGame = new MyGame();
-        $myGame->name = $validatedData['name'];
-        $myGame->rating = $validatedData['rating'];
-        // Set other fields
-
-        // Save the MyGame instance
-        $myGame->save();
-
-        // Redirect to the show method to display the newly created MyGame
-        return redirect()->route('mygame.show', ['id' => $myGame->id]);
-    }
-
-
-    public function update(Request $request, $id)
-    {
-        // Validate the request data
-        $validatedData = $request->validate([
-            'name' => 'required',
-            'rating' => 'required',
-            // Add validation rules for other fields
-        ]);
-
-        // Find the MyGame instance
-        $myGame = MyGame::find($id);
-
-        if (!$myGame) {
-            // Handle the case when the MyGame is not found
-            // You can redirect or return an error response
-        }
-
-        // Update the MyGame instance with the new data
-        $myGame->name = $validatedData['name'];
-        $myGame->rating = $validatedData['rating'];
-        // Update other fields
-
-        // Save the updated MyGame instance
-        $myGame->save();
-
-        // Redirect to the show method to display the updated MyGame
-        return redirect()->route('mygame.show', ['id' => $myGame->id]);
-    }
-
-    public function destroy($id)
-    {
-        // Find the MyGame instance
-        $myGame = MyGame::find($id);
-
-        if (!$myGame) {
-            // Handle the case when the MyGame is not found
-            // You can redirect or return an error response
-        }
-
-        // Delete the MyGame instance
-        $myGame->delete();
-
-        // Redirect to the index method to display the remaining MyGames
-        return redirect()->route('mygame.index');
-
     }
 }

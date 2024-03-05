@@ -77,13 +77,13 @@ Route::resource('/admin/libraries', LibraryController::class)->middleware('admin
 
 Route::resource('/admin/comments', CommentController::class)->middleware('adminRedirect');
 
-Route::resource('search', SearchController::class);
+Route::resource('/admin/games', GameController::class)->middleware('adminRedirect');
 
-Route::resource('game', GameController::class);
+Route::resource('search', SearchController::class);
 
 Route::post('/like/toogle', [LikeController::class, 'toggle'])->name('like.toggle')->middleware('auth');
 
-Route::get('/game/{id}',[GameController::class,'show']);
+Route::get('/game/{id}',[GameController::class,'showGame']);
 
 Route::post('/comments/addcomment', [CommentController::class, 'addcomment'])->name('comments.addcomment');
 
