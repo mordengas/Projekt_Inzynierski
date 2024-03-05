@@ -86,33 +86,6 @@ class Graph {
         $visited[$vertex] = false;
     }
 
-    // public function highest_depth(Graph $graph) {
-    //     $visited = [];
-    //     $max_depth = 0;
-
-    //     foreach ($graph->vertices as $vertex) {
-    //         if (!in_array($vertex, $visited)) {
-    //             $max_depth = max($max_depth, $this->dfs($graph, $vertex, array_merge([], $visited), 0));
-    //             var_dump($max_depth);
-    //         }
-    //     }
-
-    //     return $max_depth;
-    // }
-
-    // private function dfs(Graph $graph, $vertex, array $visited, int $depth) {
-    //     $visited[] = $vertex;
-    //     $depth++;
-
-    //     foreach (array_keys($graph->edges[$vertex]) as $neighbor) {
-    //         if (!in_array($neighbor, $visited)) {
-    //             $depth = max($depth, $this->dfs($graph, $neighbor, $visited, $depth));
-    //             var_dump($depth);
-    //         }
-    //     }
-
-    //     return $depth;
-    // }
 
     public function longestPath() {
         $maxPathLength = 0;

@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Like;
-use App\Models\Comment;
-use App\Http\Requests\StoreLikeRequest;
-use App\Http\Requests\UpdateLikeRequest;
 use Illuminate\Http\Request;
 
 class LikeController extends Controller
@@ -15,7 +12,8 @@ class LikeController extends Controller
      */
     public function index()
     {
-        //
+        $likes = Like::all();
+        return view('admin.likes.index', compact('likes'))->with('view','admin');
     }
 
     /**
@@ -23,47 +21,66 @@ class LikeController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.likes.create')->with('view','admin');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreLikeRequest $request)
+    public function store(Request $request)
     {
-        //
-    }
+        $validatedDate = $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'comment_id' => 'required|exists:comments,id',
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Like $like)
-    {
-        //
+        $like = new Like();
+        $like->user_id = $validatedDate['user_id'];
+        $like->comment_id = $validatedDate['comment_id'];
+        $like->save();
+
+        return redirect()->route('likes.index');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Like $like)
+    public function edit($id)
     {
-        //
+        $like = Like::findOrFail($id);
+        return view('admin.likes.edit', compact('like'))->with('view','admin');
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateLikeRequest $request, Like $like)
+    public function update(Request $request, $id)
     {
-        //
+        $validatedDate = $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'comment_id' => 'required|exists:comments,id',
+        ]);
+
+        $like = Like::findOrFail($id);
+        $like->user_id = $validatedDate['user_id'];
+        $like->comment_id = $validatedDate['comment_id'];
+        $like->save();
+
+        return redirect()->route('likes.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Like $like)
+    public function destroy($id)
     {
-        //
+        $like = Like::find($id);
+
+        if($like){
+            $like->delete();
+        }
+
+        return redirect()->back();
     }
 
     public function toggle(Request $request)

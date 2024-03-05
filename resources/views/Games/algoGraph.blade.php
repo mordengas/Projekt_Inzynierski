@@ -1,6 +1,5 @@
 <div class="container">
 
-
     <form action="{{route('recommend.storegraph')}}" method="POST" enctype="multipart/form-data" id="graph">
         {{ csrf_field() }}
         <div class="checkbox-group-graph">
@@ -88,7 +87,7 @@
         <div class="d-flex flex-row-reverse">
             <div class="form-group">
                 <label for="range">Range:</label>
-                <input type="range" class="form-control-range" id="range" name="range" min="1" max="3" oninput="updateRangeIndicator(this.value)">
+                <input type="range" class="form-control-range" id="range" name="range" min="1" max="{{$graph->longestPath()}}" oninput="updateRangeIndicator(this.value)">
                 <span id="rangeIndicator">2</span>
             </div>
         </div>
@@ -125,10 +124,16 @@
             </div>
             </div>
             <br>
-            <div class="d-flex flex-row-reverse">
+            <div class="d-flex flex-row-reverse justify-content-between">
+
                 <div class="col-md-1.5">
                     <button class="btn btn-primary btn-lg" type="submit" form="graph">See Games</button>
                 </div>
+
+                <div class="col-md-1.5">
+                    @livewire('show-graph-modal')
+                </div>
+
             </div>
     </form>
 </div>
@@ -147,6 +152,27 @@
                 }
             } else {
                 checkedCount--;
+            }
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('graph');
+        form.addEventListener('submit', function(event) {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"].checkbox-graph');
+            let checked = false;
+
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    checked = true;
+                }
+            });
+
+            if (!checked) {
+                event.preventDefault(); // Prevent form submission
+                alert('Please select at least one genre.');
             }
         });
     });

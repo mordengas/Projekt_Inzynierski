@@ -67,8 +67,6 @@ class UserController extends Controller
             $imageName = time() . '.' . $request->image->extension();
             $request->image->move(public_path('images'), $imageName);
             $user->image = $imageName;
-            }else{
-
             }
 
         $user->save();
@@ -127,8 +125,12 @@ class UserController extends Controller
         $request->image->move(public_path('images'), $imageName);
         $user->image = $imageName;
         }else{
-
+            if($request->input('deleteImage') !== null){
+                $user->image = 'user.png';
+            }
         }
+
+
 
         $user->save();
 
@@ -143,14 +145,14 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         if (!$user) {
-            return response()->json(['message' => 'User not found'], 404);
+            return redirect()->route('users.index')->with('view','admin');
         }
 
         // Delete the user
         $user->delete();
 
         // Return a response
-        return response()->json(['message' => 'User deleted successfully'], 200);
+        return redirect()->route('users.index')->with('view','admin');
     }
 
 }

@@ -63,33 +63,29 @@ Route::get('/', function () {
     return redirect()->route('home');
 });
 
+Route::get('/admin', function () {
+    return redirect()->route('graphWeights.index');
+})->name('admin')->middleware('adminRedirect');
+
 Route::resource('/admin/graphWeights', GraphWeightController::class)->middleware('adminRedirect');
 
 Route::resource('/admin/users', UserController::class)->middleware('adminRedirect');
 
-Route::resource('comments', CommentController::class);
+Route::resource('/admin/likes', LikeController::class)->middleware('adminRedirect');
+
+Route::resource('/admin/libraries', LibraryController::class)->middleware('adminRedirect');
+
+Route::resource('/admin/comments', CommentController::class)->middleware('adminRedirect');
 
 Route::resource('search', SearchController::class);
 
 Route::resource('game', GameController::class);
 
-Route::resource('library', LibraryController::class);
-
-Route::resource('recommend', RecommendController::class);
-
-Route::resource('like', LikeController::class);
-
 Route::post('/like/toogle', [LikeController::class, 'toggle'])->name('like.toggle')->middleware('auth');
-
-Route::get('/admin', function () {
-    return redirect()->route('graphWeights.index');
-})->name('admin')->middleware('adminRedirect');
-
-Route::get('/game',[CommentController::class,'index']);
 
 Route::get('/game/{id}',[GameController::class,'show']);
 
-Route::get('/games',[SearchController::class,'index']);
+Route::post('/comments/addcomment', [CommentController::class, 'addcomment'])->name('comments.addcomment');
 
 Route::post('/library/state', [LibraryController::class, 'setState'])->name('library.setState');
 Route::post('/library/add', [LibraryController::class, 'addGame'])->name('library.addGame');

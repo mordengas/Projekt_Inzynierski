@@ -120,9 +120,9 @@ class RecommendGraphController extends Controller{
 
             $recommendedGames = MyGame::whereIn('id', $ids)->get()->all();
 
-            dd($graph->longestPath());
+            // dd($graph->longestPath());
 
-        return view('recommend')->with('games', $recommendedGames)->with('activeTab', 'content3');
+        return view('recommend')->with('games', $recommendedGames)->with('activeTab', 'content3')->with('graph', $graph);
 
     }
 }

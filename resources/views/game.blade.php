@@ -107,7 +107,7 @@
 
         @else
         <h3>Add Comment</h3>
-        <form action="{{ route('comments.store') }}" method="POST">
+        <form action="{{ route('comments.addcomment') }}" method="POST">
             @csrf
             <input type="hidden" name="game_id" value="{{(int)$game->id}}">
             @if(auth()->check())

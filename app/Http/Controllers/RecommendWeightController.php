@@ -7,12 +7,44 @@ use App\Models\MyGame;
 use MarcReichel\IGDBLaravel\Models\Game;
 use App\Models\Library;
 use App\Models\User;
+use App\Models\GraphWeight;
+use App\Models\Helpers\Graph;
 
 class RecommendWeightController extends Controller
 {
 
     public function storeWeight(Request $request){
 
+        $graph = new Graph();
+
+        $graph->addVertex('Fighting');
+        $graph->addVertex('Shooter');
+        $graph->addVertex('Music');
+        $graph->addVertex('Platform');
+        $graph->addVertex('Puzzle');
+        $graph->addVertex('Racing');
+        $graph->addVertex('Real Time Strategy (RTS)');
+        $graph->addVertex('Role-playing (RPG)');
+        $graph->addVertex('Simulator');
+        $graph->addVertex('Sport');
+        $graph->addVertex('Strategy');
+        $graph->addVertex('Turn-based strategy (TBS)');
+        $graph->addVertex('Tactical');
+        $graph->addVertex('Quiz/Trivia');
+        $graph->addVertex("Hack and slash/Beat 'em up");
+        $graph->addVertex('Pinball');
+        $graph->addVertex('Adventure');
+        $graph->addVertex('Arcade');
+        $graph->addVertex('Visual Novel');
+        $graph->addVertex('Indie');
+        $graph->addVertex('Card & Board Game');
+        $graph->addVertex('MOBA');
+        $graph->addVertex('Point-and-click');
+
+        $edges = GraphWeight::all();
+        foreach($edges as $edge){
+            $graph->addEdge($edge->start, $edge->destination, $edge->weight);
+        }
         // $preferences = [
         //     "1" => 8, // single player
         //     "2" => 2, // multi-player
@@ -71,7 +103,7 @@ class RecommendWeightController extends Controller
         $gameIds = array_column($neighbors, 'game_id');
         $mygames_reco = MyGame::whereIn('id', $gameIds)->get()->all();
 
-        return view('recommend')->with('games', $mygames_reco)->with('activeTab', 'content1');
+        return view('recommend')->with('games', $mygames_reco)->with('activeTab', 'content1')->with('graph', $graph);
     }
 
     public function find_games($pref, $games, $i){

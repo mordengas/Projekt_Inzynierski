@@ -1,3 +1,4 @@
+<div class="container">
     <form action="{{route('recommend.storeweight')}}" method="POST" enctype="multipart/form-data" id="weight">
         {{ csrf_field() }}
         <div class="row">
@@ -106,3 +107,4 @@
             </div>
         </div>
     </form>
+</div>

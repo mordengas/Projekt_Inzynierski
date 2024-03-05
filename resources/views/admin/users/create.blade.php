@@ -41,6 +41,7 @@
       <label for="image" class="form-label">Image</label>
       <input type="file" name="image" id="image" class="form-control">
     </div>
+    <br>
     <button type="submit" class="btn btn-primary">Create User</button>
   </form>
 </div>

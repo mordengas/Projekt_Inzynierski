@@ -39,6 +39,13 @@ class Comment extends Model
         return $this->hasMany(Like::class);
     }
 
-
+    public static function search($search)
+    {
+    return empty($search) ? static::query()
+        : static::whereHas('user', function ($query) use ($search) {
+            $query->where('name', 'like', '%'.$search.'%');
+        })->orWhere('game_id', 'like', '%'.$search.'%')
+        ->orWhere('content', 'like', '%'.$search.'%');
+    }
 
 }

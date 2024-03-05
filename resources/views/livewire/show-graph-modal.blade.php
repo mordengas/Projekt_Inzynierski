@@ -129,5 +129,5 @@
         </div>
     </div>
 </div>
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ShowGraphModal">See Graph</button>
+<button type="button" class="btn btn-primary btn-md" data-bs-toggle="modal" data-bs-target="#ShowGraphModal">See Graph</button>
 </div>
