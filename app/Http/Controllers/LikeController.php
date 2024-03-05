@@ -39,7 +39,7 @@ class LikeController extends Controller
         $like->comment_id = $validatedDate['comment_id'];
         $like->save();
 
-        return redirect()->route('likes.index');
+        return redirect()->route('likes.index')->with('message', 'Like created successfully!');
     }
 
     /**
@@ -66,7 +66,7 @@ class LikeController extends Controller
         $like->comment_id = $validatedDate['comment_id'];
         $like->save();
 
-        return redirect()->route('likes.index');
+        return redirect()->route('likes.index')->with('message', 'Like updated successfully!');
     }
 
     /**

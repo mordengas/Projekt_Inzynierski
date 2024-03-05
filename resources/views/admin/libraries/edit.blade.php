@@ -43,7 +43,7 @@
         </select>
     </div>
     <br>
-    <button type="submit" class="btn btn-primary">Update</button>
+    <button type="submit" class="btn btn-primary">Edit Library Entry</button>
 </form>
 </div>
 @endsection

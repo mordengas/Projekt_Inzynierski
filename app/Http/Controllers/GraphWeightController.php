@@ -39,15 +39,44 @@ class GraphWeightController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $validatedData = $request->validate([
             'start' => 'required|string',
             'destination' => 'required|string',
-            'weight' => 'required|numeric',
+            'weight' => 'required|numeric|between:1,10',
         ]);
 
-        GraphWeight::create($request->all())->save();
+        if($validatedData['start'] === $validatedData['destination']){
+            return redirect()->back()->with('err', "Start can't be same as destination.");
+        }else{
+            $graphWeightSame = GraphWeight::where('start', $validatedData['start'])
+            ->where('destination', $validatedData['destination'])
+            ->first();
 
-        return redirect()->route('graphWeights.index')->with('success', 'Graph weight created successfully!');
+            $graphWeightBidirect = GraphWeight::where('start', $validatedData['destination'])
+            ->where('destination', $validatedData['start'])
+            ->first();
+
+            if ($graphWeightSame) {
+                return redirect()->back()->with('err', 'Graph weight already exists for the specified start and destination.');
+            }else{
+                if($graphWeightBidirect){
+                    $graphWeightNew = new GraphWeight();
+                    $graphWeightNew->start = $validatedData['start'];
+                    $graphWeightNew->destination = $validatedData['destination'];
+                    $graphWeightNew->weight = $graphWeightBidirect->weight;
+                    $graphWeightNew->save();
+                    return redirect()->route('graphWeights.index')->with('message', 'Graph weight created successfully!');
+                }
+            }
+
+            $graphWeightNew = new GraphWeight();
+            $graphWeightNew->start = $validatedData['start'];
+            $graphWeightNew->destination = $validatedData['destination'];
+            $graphWeightNew->weight = $validatedData['weight'];
+            $graphWeightNew->save();
+            return redirect()->route('graphWeights.index')->with('message', 'Graph weight created successfully!');
+        }
+
     }
 
     /**
@@ -74,15 +103,51 @@ class GraphWeightController extends Controller
     {
         $graphWeight = GraphWeight::findOrFail($id);
 
-        $this->validate($request, [
+        $validatedData = $request->validate([
             'start' => 'required|string',
             'destination' => 'required|string',
-            'weight' => 'required|numeric',
+            'weight' => 'required|numeric|between:1,10',
         ]);
 
-        $graphWeight->update($request->all());
+        if($validatedData['start'] === $validatedData['destination']){
+            return redirect()->back()->with('err', "Start can't be same as destination.");
+        }else{
+            $graphWeightSame = GraphWeight::where('start', $validatedData['start'])
+            ->where('destination', $validatedData['destination'])
+            ->first();
 
-        return redirect()->route('graphWeights.index')->with('success', 'Graph weight updated successfully!');
+            $graphWeightBidirect = GraphWeight::where('start', $validatedData['destination'])
+            ->where('destination', $validatedData['start'])
+            ->first();
+
+            if ($graphWeightSame->id !== $graphWeight->id) {
+                return redirect()->back()->with('err', 'Graph weight already exists for the specified start and destination.');
+            }else{
+                if($graphWeightBidirect){
+
+                    $graphWeight->start = $validatedData['start'];
+                    $graphWeight->destination = $validatedData['destination'];
+                    $graphWeight->weight = $validatedData['weight'];
+                    $graphWeight->update();
+
+                    if($graphWeightBidirect->weight !== $validatedData['weight']){
+                        $graphWeightBidirect->weight = $validatedData['weight'];
+                        $graphWeightBidirect->update();
+                    }
+
+                    return redirect()->route('graphWeights.index')->with('message', 'Graph weight created successfully!');
+                }
+            }
+
+            $graphWeight = new GraphWeight();
+            $graphWeight->start = $validatedData['start'];
+            $graphWeight->destination = $validatedData['destination'];
+            $graphWeight->weight = $validatedData['weight'];
+            $graphWeight->update();
+            return redirect()->route('graphWeights.index')->with('message', 'Graph weight created successfully!');
+        }
+
+        return redirect()->route('graphWeights.index')->with('message', 'Graph weight updated successfully!');
     }
 
     /**
@@ -96,6 +161,6 @@ class GraphWeightController extends Controller
         $graphWeight = GraphWeight::findOrFail($id);
         $graphWeight->delete();
 
-        return redirect()->route('graphWeights.index')->with('success', 'Graph weight deleted successfully!');
+        return redirect()->route('graphWeights.index')->with('message', 'Graph weight deleted successfully!');
     }
 }

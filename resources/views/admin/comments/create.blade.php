@@ -27,7 +27,7 @@
         <textarea type="text" class="form-control" id="content" name="content" placeholder="Content"></textarea>
     </div>
     <br>
-    <button type="submit" class="btn btn-primary">Create</button>
+    <button type="submit" class="btn btn-primary">Create Comment</button>
 </form>
 </div>
 @endsection

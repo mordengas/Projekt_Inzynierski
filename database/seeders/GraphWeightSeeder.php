@@ -194,7 +194,7 @@ class GraphWeightSeeder extends Seeder
             [
                 'start' => 'Adventure',
                 'destination' => 'Puzzle',
-                'weight' => 7
+                'weight' => 6
             ],
             [
                 'start' => 'Adventure',
@@ -204,7 +204,7 @@ class GraphWeightSeeder extends Seeder
             [
                 'start' => 'Adventure',
                 'destination' => 'Role-playing (RPG)',
-                'weight' => 6
+                'weight' => 7
             ],
 
             [
@@ -235,7 +235,7 @@ class GraphWeightSeeder extends Seeder
             [
                 'start' => 'Arcade',
                 'destination' => 'Fighting',
-                'weight' => 5
+                'weight' => 6
             ],
             [
                 'start' => 'Arcade',

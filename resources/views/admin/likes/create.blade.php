@@ -23,7 +23,7 @@
         <input type="text" class="form-control" id="comment_id" name="comment_id" placeholder="Comment ID">
     </div>
     <br>
-    <button type="submit" class="btn btn-primary">Create</button>
+    <button type="submit" class="btn btn-primary">Create Like</button>
 </form>
 </div>
 @endsection

@@ -28,7 +28,7 @@
         <textarea type="text" class="form-control" id="content" name="content" placeholder="Content">{{ $comment->content }}</textarea>
     </div>
     <br>
-    <button type="submit" class="btn btn-primary">Update</button>
+    <button type="submit" class="btn btn-primary">Edit Comment</button>
 </form>
 </div>
 @endsection

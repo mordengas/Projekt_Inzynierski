@@ -24,7 +24,7 @@
         <input type="text" class="form-control" id="comment_id" name="comment_id" value="{{$like->comment_id}}">
     </div>
     <br>
-    <button type="submit" class="btn btn-primary">Create</button>
+    <button type="submit" class="btn btn-primary">Edit Like</button>
 </form>
 </div>
 @endsection

@@ -47,7 +47,7 @@ class LibraryController extends Controller
         $library->save();
 
         // Redirect to index page or wherever you want
-        return redirect()->route('libraries.index');
+        return redirect()->route('libraries.index')->with('message', 'Library entry created successfully!');
     }
 
     public function edit($id)
@@ -95,7 +95,7 @@ class LibraryController extends Controller
             $library->save();
         }
 
-        return redirect()->route('libraries.index');
+        return redirect()->route('libraries.index')->with('message', 'Library entry updated successfully!');
 
     }
 

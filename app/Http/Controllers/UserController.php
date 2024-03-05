@@ -25,7 +25,7 @@ class UserController extends Controller
         $user = User::find($request->id);
 
         if (!$user) {
-            return response()->json(['message' => 'User not found'], 404);
+            return redirect()->back();
         }
 
         $library = Library::where('user_id', $user->id)->pluck('game_id')->toArray();
@@ -72,8 +72,7 @@ class UserController extends Controller
         $user->save();
 
         // Return a response
-        return redirect()->route('users.index')->with('success', 'User created successfully!');
-        // response()->json(['message' => 'User created successfully'], 201);
+        return redirect()->route('users.index')->with('message', 'User created successfully!');
     }
 
     public function edit(User $user)
@@ -130,12 +129,10 @@ class UserController extends Controller
             }
         }
 
-
-
         $user->save();
 
         // Return a response
-        return redirect()->route('users.index')->with('success', 'User updated successfully!');
+        return redirect()->route('users.index')->with('message', 'User updated successfully!');
     }
 
 
@@ -152,7 +149,7 @@ class UserController extends Controller
         $user->delete();
 
         // Return a response
-        return redirect()->route('users.index')->with('view','admin');
+        return redirect()->route('users.index')->with('view','admin')->with('message', 'User deleted successfully!');
     }
 
 }

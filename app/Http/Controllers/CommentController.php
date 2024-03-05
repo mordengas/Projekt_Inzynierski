@@ -43,7 +43,7 @@ class CommentController extends Controller
         $comment->save();
 
         // Return a response or redirect to a success page
-        return redirect()->route('comments.index');
+        return redirect()->route('comments.index')->with('message', 'Comment created successfully.');
     }
 
     public function update(Request $request, $id)
@@ -63,7 +63,7 @@ class CommentController extends Controller
 
         $comment->save();
 
-        return redirect()->route('comments.index')->with('success', 'Comment updated successfully.');
+        return redirect()->route('comments.index')->with('message', 'Comment updated successfully.');
     }
 
 
@@ -106,7 +106,7 @@ class CommentController extends Controller
         }
 
         $comment->delete();
-        return redirect()->route('comments.index')->with('view','admin');
+        return redirect()->route('comments.index')->with('view','admin')->with('message', 'Comment deleted successfully.');
     }
 
 

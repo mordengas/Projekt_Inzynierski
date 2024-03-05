@@ -12,6 +12,13 @@
             </ul>
         </div>
     @endif
+    @if (session()->has('err'))
+    <div class="alert alert-danger">
+        <ul>
+            <li>{{ session()->get('err') }}</li>
+        </ul>
+    </div>
+    @endif
 
     <form action="{{ route('graphWeights.store') }}" method="POST">
         @csrf
@@ -92,6 +99,6 @@
             @enderror
         </div>
         <br>
-        <button type="submit" class="btn btn-primary">Create</button>
+        <button type="submit" class="btn btn-primary">Create Graph Weight</button>
     </form>
 @endsection

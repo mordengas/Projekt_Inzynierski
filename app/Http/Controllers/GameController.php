@@ -27,7 +27,7 @@ class GameController extends Controller
         $myGame->delete();
 
         // Redirect to the index method to display the remaining MyGames
-        return redirect()->route('games.index');
+        return redirect()->route('games.index')->with('message', 'Game deleted successfully.');
 
     }
 
