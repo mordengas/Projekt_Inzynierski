@@ -101,7 +101,7 @@ class RecommendGenreController extends Controller
         $rok = (int)$request->rok_wydania;
 
         $games = Game::whereNotNull('platforms')->whereNotNull('genres')
-         ->whereIn('game_modes', [4,5,6])->whereIn('platforms', $platforma)
+         ->whereNotNull('game_modes')->whereIn('platforms', $platforma)
          ->whereYear('first_release_date','>=', $rok)
          ->limit(300)->get();
 

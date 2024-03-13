@@ -8,7 +8,7 @@
     @endif
     <div class="container">
         <br>
-        <a href="{{ route('libraries.create') }}" class="btn btn-primary">Create Library Entry</a>
+        {{-- <a href="{{ route('libraries.create') }}" class="btn btn-primary">Create Library Entry</a> --}}
         <livewire:libraries-table />
     </div>
 @endsection

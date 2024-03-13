@@ -8,7 +8,7 @@
     @endif
     <div class="container">
         <br>
-        <a href="{{ route('likes.create') }}" class="btn btn-primary">Create Like</a>
+        {{-- <a href="{{ route('likes.create') }}" class="btn btn-primary">Create Like</a> --}}
         <livewire:likes-table />
     </div>
 @endsection

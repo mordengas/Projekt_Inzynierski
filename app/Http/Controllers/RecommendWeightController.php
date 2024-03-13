@@ -54,20 +54,28 @@ class RecommendWeightController extends Controller
         //     "6" => 5, // Battle Royale
         // ];
 
+        $validatedData = $request->validate([
+            'single_player' => 'required|integer|min:1|max:10',
+            'multi_player' => 'required|integer|min:1|max:10',
+            'co_op' => 'required|integer|min:1|max:10',
+            'split_screen' => 'required|integer|min:1|max:10',
+            'mmo' => 'required|integer|min:1|max:10',
+            'battle_royale' => 'required|integer|min:1|max:10',
+        ]);
         $userPreferences = [
-            "1" => (int)$request->single_player, // single player
-            "2" => (int)$request->multi_player, // multi-player
-            "3" => (int)$request->co_op, // co-op
-            "4" => (int)$request->split_screen, // Split screen
-            "5" => (int)$request->mmo, // MMO
-            "6" => (int)$request->battle_royale, // Battle Royale
+            "1" => (int)$validatedData['single_player'], // single player
+            "2" => (int)$validatedData['multi_player'], // multi-player
+            "3" => (int)$validatedData['co_op'], // co-op
+            "4" => (int)$validatedData['split_screen'], // Split screen
+            "5" => (int)$validatedData['mmo'], // MMO
+            "6" => (int)$validatedData['battle_royale'], // Battle Royale
         ];
 
         $platforma[] = (int)$request->platforma;
         $rok = (int)$request->rok_wydania;
 
         $games = Game::whereNotNull('platforms')->whereNotNull('genres')
-         ->whereIn('game_modes', [4,5,6])->whereIn('platforms', $platforma)
+         ->whereNotNull('game_modes')->whereIn('platforms', $platforma)
          ->whereYear('first_release_date','>=', $rok)
          ->limit(300)->get();
 
@@ -128,7 +136,7 @@ class RecommendWeightController extends Controller
         // Adjust rating based on intersecting genres and preferences
         $rating += $intersectingGenres * 0.5;
 
-        error_log($rating);
+        // error_log($rating);
         }
         $ratings[] = [
             "game_id" => $game->id,
@@ -154,11 +162,13 @@ class RecommendWeightController extends Controller
     foreach(explode(' ',$game->game_modes) as $mode){
         if (isset($pref[$mode])) {
             $i++;
-            $rating = $pref[$mode];
+            $rating += $pref[$mode];
         }
+        error_log("i:".$i);
     }
+    error_log("before".$rating);
     $rating = $rating * ((6-$i)/6);
-
+    error_log("after".$rating);
     return $rating;
     }
 }
