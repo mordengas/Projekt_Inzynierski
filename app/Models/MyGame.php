@@ -76,7 +76,8 @@ class MyGame extends Model
 
     public static function gameModesToString($gameModes)
     {
-        if($gameModes === null){
+        //dd($gameModes);
+        if($gameModes === ""){
             return "No game modes.";
         }else{
             $gameModes = explode(' ', $gameModes);

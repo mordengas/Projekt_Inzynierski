@@ -4,9 +4,12 @@ namespace App\Livewire;
 
 use App\Models\User;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class UsersTable extends Component
 {
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     public $perPage = 10;
     public $search = '';
     public $orderBy = 'id';

@@ -4,9 +4,12 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\MyGame;
+use Livewire\WithPagination;
 
 class MyGamesTable extends Component
 {
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
 
     public $perPage = 10;
     public $search = '';

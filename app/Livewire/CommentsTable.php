@@ -4,10 +4,13 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Comment;
+use Livewire\WithPagination;
 
 class CommentsTable extends Component
 {
 
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     public $perPage = 10;
     public $search = '';
     public $orderBy = 'id';

@@ -4,9 +4,12 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Like;
+use Livewire\WithPagination;
 
 class LikesTable extends Component
 {
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
 
     public $perPage = 10;
     public $search = '';
